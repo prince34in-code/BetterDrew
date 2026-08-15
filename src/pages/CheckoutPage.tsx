@@ -1,6 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from "@/context/CartContext";
+import { Helmet } from 'react-helmet-async';
 import { CheckCircle } from 'lucide-react';
 import Footer from '@/sections/Footer';
 
@@ -38,6 +39,12 @@ const CheckoutPage: React.FC = () => {
 
   if (itemCount === 0) {
     return (
+      <>
+      <Helmet>
+        <title>Checkout | Betterdrew</title>
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href="https://betterdrew.com/checkout" />
+      </Helmet>
       <div className="pt-24 bg-drew-warm-ivory min-h-screen flex flex-col items-center justify-center">
         <div className="text-center bg-drew-soft-white rounded-2xl p-12 shadow-soft">
           <p className="text-lg text-drew-secondary-text">Your cart is empty. Add items to proceed to checkout.</p>
@@ -46,6 +53,7 @@ const CheckoutPage: React.FC = () => {
           </Link>
         </div>
       </div>
+      </>
     );
   }
 
@@ -92,6 +100,12 @@ const CheckoutPage: React.FC = () => {
 
   if (isOrderComplete) {
     return (
+      <>
+      <Helmet>
+        <title>Order Complete | Betterdrew</title>
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href="https://betterdrew.com/checkout" />
+      </Helmet>
       <div className="pt-24 bg-drew-warm-ivory min-h-screen flex flex-col">
         <main className="flex-grow flex items-center justify-center">
           <section className="w-full max-w-md mx-auto my-12 sm:my-16 px-4 text-center">
@@ -111,6 +125,7 @@ const CheckoutPage: React.FC = () => {
         </main>
         <Footer />
       </div>
+      </>
     );
   }
 
@@ -132,6 +147,14 @@ const CheckoutPage: React.FC = () => {
 
   return (
     <div className="pt-24 bg-drew-warm-ivory min-h-screen flex flex-col">
+      <Helmet>
+        <title>Checkout | Betterdrew</title>
+        <meta name="description" content="Complete your Betterdrew order by providing your shipping and payment information." />
+        <link rel="canonical" href="https://betterdrew.com/checkout" />
+        <meta property="og:title" content="Checkout | Betterdrew" />
+        <meta property="og:description" content="Complete your Betterdrew order." />
+        <meta property="og:url" content="https://betterdrew.com/checkout" />
+      </Helmet>
       <main className="flex-grow">
         <section className="w-full max-w-6xl mx-auto my-12 sm:my-16 px-4">
           <div className="text-center mb-12">

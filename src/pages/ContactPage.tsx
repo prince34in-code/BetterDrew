@@ -1,5 +1,6 @@
 import React, { useState, FormEvent } from 'react';
 import Footer from '@/sections/Footer';
+import { Helmet } from 'react-helmet-async';
 import { ArrowRight } from 'lucide-react';
 
 interface FormState {
@@ -54,6 +55,14 @@ const ContactPage: React.FC = () => {
 
   return (
     <div className="bg-drew-warm-ivory">
+      <Helmet>
+        <title>Contact Us | Betterdrew</title>
+        <meta name="description" content="Get in touch with the Betterdrew team. We're here to help with any questions you may have about our products or your order." />
+        <link rel="canonical" href="https://betterdrew.com/contact" />
+        <meta property="og:title" content="Contact Us | Betterdrew" />
+        <meta property="og:description" content="Get in touch with the Betterdrew team." />
+        <meta property="og:url" content="https://betterdrew.com/contact" />
+      </Helmet>
       {/* 1. Contact Hero */}
       <section className="relative w-full h-[240px] sm:h-[280px] lg:h-[320px] bg-gradient-to-br from-drew-deep-green to-green-900 flex items-center justify-center">
         <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tighter">

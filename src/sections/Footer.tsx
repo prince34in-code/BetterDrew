@@ -112,7 +112,7 @@ const Footer = () => {
               {socialData.map(social => (
                 <a key={social.name} href={social.href} aria-label={social.name} className="opacity-80 hover:opacity-100 transition-opacity duration-200">
                   <img
-                    src={social.icon}
+                    src={social.icon} // This is a placeholder, will be replaced with actual icon
                     alt={`${social.name} logo`}
                     className="w-6 h-6"
                   />

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import BrandStory from '@/sections/BrandStory';
 import Footer from '@/sections/Footer';
 import gsap from 'gsap';
@@ -42,6 +43,14 @@ const AboutPage: React.FC = () => {
 
   return (
     <div ref={pageRef} className="bg-drew-warm-ivory">
+      <Helmet>
+        <title>About Us | Betterdrew</title>
+        <meta name="description" content="Learn about Betterdrew's mission to provide better hydration with nothing unnecessary. We believe in simple, natural, and everyday wellness." />
+        <link rel="canonical" href="https://betterdrew.com/about" />
+        <meta property="og:title" content="About Us | Betterdrew" />
+        <meta property="og:description" content="Learn about Betterdrew's mission to provide better hydration with nothing unnecessary." />
+        <meta property="og:url" content="https://betterdrew.com/about" />
+      </Helmet>
       {/* 2. About Hero */}
       <section className="relative w-full h-[40vh] sm:h-[45vh] lg:h-[50vh] bg-drew-deep-green flex flex-col justify-center items-center text-center px-4">
         <div className="max-w-4xl">

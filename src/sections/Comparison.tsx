@@ -159,7 +159,7 @@ const Comparison = () => {
         <div className="grid grid-cols-2 gap-4 sm:gap-8 items-end mb-6 sm:mb-8 lg:mb-12">
             <div className="betterdrew-column flex flex-col items-center gap-3 sm:gap-4">
                 <img
-                    src={betterdrewProduct.image}
+                    src={betterdrewProduct.image} // This is a placeholder, will be replaced with actual product image
                     alt={`${betterdrewProduct.brand} ${betterdrewProduct.name}`}
                     className="w-44 h-auto sm:w-auto sm:h-56 md:h-64 lg:h-80 object-contain"
                     style={{ filter: 'drop-shadow(0px 15px 25px rgba(0, 0, 0, 0.1))' }}

@@ -42,7 +42,7 @@ const LifestyleCard = ({ category, title, description, imageUrl, index }: Lifest
           {description}
         </p>
         <a
-          href="#"
+          href="/about"
           className="group/cta mt-4 sm:mt-6 flex items-center font-semibold text-drew-deep-green transition-colors duration-300 hover:text-drew-coconut-green"
         >
           Learn More

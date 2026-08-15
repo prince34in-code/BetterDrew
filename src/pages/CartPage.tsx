@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { useCart } from "@/context/CartContext";
 import Footer from '@/sections/Footer';
 import { Plus, Minus, Trash2 } from 'lucide-react';
@@ -11,6 +12,14 @@ const CartPage: React.FC = () => {
 
   return (
     <div className="pt-24 bg-drew-warm-ivory min-h-screen flex flex-col">
+      <Helmet>
+        <title>Your Cart | Betterdrew</title>
+        <meta name="description" content="Review and manage the items in your Betterdrew shopping cart. Proceed to checkout to complete your order." />
+        <link rel="canonical" href="https://betterdrew.com/cart" />
+        <meta property="og:title" content="Your Cart | Betterdrew" />
+        <meta property="og:description" content="Review and manage the items in your Betterdrew shopping cart." />
+        <meta property="og:url" content="https://betterdrew.com/cart" />
+      </Helmet>
       <main className="flex-grow">
         <section className="w-full max-w-4xl mx-auto my-12 sm:my-16 px-4">
           <div className="text-center mb-12">
