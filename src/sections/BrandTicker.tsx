@@ -28,6 +28,13 @@ const row2Items = [
   { icon: Package, label: '200ml Pack' },
 ];
 
+const pillBackgroundColors = [
+  'bg-drew-cream',
+  'bg-drew-mint',
+  'bg-drew-light-blue',
+  'bg-drew-lavender',
+];
+
 const MarqueeRow: React.FC<{
   items: { icon: React.ElementType; label: string }[];
   direction?: 'left' | 'right';
@@ -42,8 +49,10 @@ const MarqueeRow: React.FC<{
     >
       {[...items, ...items].map((item, index) => (
         <div
-          key={index}
-          className="flex items-center shrink-0 mx-3 px-6 py-3 bg-drew-soft-white border border-drew-soft-border rounded-full shadow-sm"
+          key={index} // Key needs to be unique across all rendered items, not just within the original `items` array
+          className={`flex items-center shrink-0 mx-3 px-6 py-3
+            ${pillBackgroundColors[index % pillBackgroundColors.length]}
+            border border-drew-soft-border rounded-full shadow-sm`}
           aria-hidden={index >= items.length}
         >
           <item.icon

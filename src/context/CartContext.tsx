@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { Product, PackOption, ProductWithPacks } from "@/data/product";
 
-export interface CartItem {
+export interface CartItem extends Product {
   id: string; // This will be the pack-specific ID, e.g., 'product-id-12-pack'
   productId: string; // The base product ID
   name: string;
@@ -75,6 +75,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         id: pack.id,
         productId: product.id,
         name: product.name,
+        brand: product.brand,
+        description: product.description,
         image: product.image,
         price: pack.price,
         packName: pack.name,

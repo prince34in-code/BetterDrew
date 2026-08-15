@@ -163,15 +163,15 @@ const CheckoutPage: React.FC = () => {
                 <div className="space-y-3 max-h-60 overflow-y-auto pr-2 mb-4">
                   {cartItems.map(item => (
                     <div key={item.id} className="flex items-center gap-4">
-                      <div className="relative">
+                      <div className="relative flex-shrink-0">
                         <img src={item.image} alt={item.name} className="w-16 h-16 object-contain rounded-lg bg-drew-product-bg p-1" />
                         <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-drew-lime-accent text-xs font-bold text-drew-deep-green">{item.quantity}</span>
                       </div>
                       <div className="flex-grow">
-                        <h3 className="font-semibold text-drew-deep-green text-sm">{item.name} - {item.packName || ''}</h3>
-                        <p className="text-xs text-drew-secondary-text">{(item.bottlesPerPack || 0) * item.quantity} bottles total</p>
+                        <h3 className="font-semibold text-drew-deep-green text-sm">{item.name} - {item.packName}</h3>
+                        <p className="text-xs text-drew-secondary-text">{item.bottlesPerPack * item.quantity} bottles total</p>
                       </div>
-                      {item.price && <p className="text-sm font-semibold text-drew-deep-green">₹{(item.price * item.quantity).toFixed(2)}</p>}
+                      <p className="text-sm font-semibold text-drew-deep-green">₹{(item.price * item.quantity).toFixed(0)}</p>
                     </div>
                   ))}
                 </div>
@@ -179,7 +179,7 @@ const CheckoutPage: React.FC = () => {
                 <div className="space-y-2 py-4 border-t border-drew-soft-border">
                   <div className="flex justify-between text-drew-secondary-text">
                     <span>Subtotal</span>
-                    <span>₹{subtotal.toFixed(2)}</span>
+                    <span>₹{subtotal.toFixed(0)}</span>
                   </div>
                   <div className="flex justify-between text-drew-secondary-text">
                     <span>Shipping</span>
@@ -187,7 +187,7 @@ const CheckoutPage: React.FC = () => {
                   </div>
                   <div className="flex justify-between font-bold text-drew-deep-green text-lg pt-2 border-t border-drew-soft-border mt-2">
                     <span>Total</span>
-                    <span>₹{subtotal.toFixed(2)}</span>
+                    <span>₹{subtotal.toFixed(0)}</span>
                   </div>
                 </div>
 

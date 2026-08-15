@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { siteData } from '@/data/site';
 
 // Placeholder for the product label image. This asset needs to be created.
-const ProductLabelImage = '/src/assets/images/product/betterdrew-label.png';
+const ProductLabelImage = '/src/assets/product/label.png';
 
 const Transparency = () => {
   const sectionRef = useRef<HTMLDivElement>(null);

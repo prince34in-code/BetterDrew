@@ -14,8 +14,11 @@ import Comparison from '@/sections/Comparison'; // 4.
 import FAQ from '@/sections/FAQ'; // 5.
 import Lifestyle from '@/sections/Lifestyle'; // 6.
 import Footer from '@/sections/Footer'; // 7.
+import WhereToBuy from '@/sections/WhereToBuy';
 import ProductPage from '@/pages/ProductPage';
+import AboutPage from '@/pages/AboutPage';
 import CheckoutPage from '@/pages/CheckoutPage';
+import ContactPage from '@/pages/ContactPage';
 import CartPage from '@/pages/CartPage';
 
 const HomePage = () => (
@@ -27,29 +30,7 @@ const HomePage = () => (
     <Comparison />
     <FAQ />
     <Lifestyle />
-    <Footer />
-  </>
-);
-
-const AboutPage = () => (
-  <div className="pt-24">
-    <BrandStory />
-    <Footer />
-  </div>
-);
-
-const ContactPage = () => (
-  <>
-    <main className="pt-24 min-h-screen">
-      <div className="mx-auto max-w-4xl px-6 py-20 text-center">
-        <h1 className="text-4xl font-bold">
-          Contact Us
-        </h1>
-        <p className="mt-4">
-          Contact information coming soon.
-        </p>
-      </div>
-    </main>
+    <WhereToBuy />
     <Footer />
   </>
 );
@@ -102,6 +83,7 @@ function App() {
     <CartProvider>
       <ScrollToTop />
       <Navbar />
+      <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/product" element={<ProductPage />} />
@@ -111,6 +93,7 @@ function App() {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+      </main>
     </CartProvider>
   )
 }

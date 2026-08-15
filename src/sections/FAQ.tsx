@@ -1,42 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// This data is legacy and will be replaced by data from a central store.
-const faqData = [
-  {
-    question: 'What is Betterdrew?',
-    answer: 'Betterdrew is young coconut water made from tender coconuts, naturally refreshing and free from added sugar and preservatives.',
-  },
-  {
-    question: 'What is in Betterdrew?',
-    answer: 'Betterdrew contains young coconut water with vitamin C. It has no added sugar and no preservatives.',
-  },
-  {
-    question: 'Does Betterdrew contain added sugar?',
-    answer: 'No. Betterdrew contains 0g added sugar.',
-  },
-  {
-    question: 'Is Betterdrew lactose and gluten free?',
-    answer: 'Yes. Betterdrew is lactose free and gluten free.',
-  },
-  {
-    question: 'Where can I buy Betterdrew?',
-    answer: 'You can purchase Betterdrew directly through our website. Select your preferred pack size and continue to checkout.',
-  },
-  {
-    question: 'How should I store Betterdrew?',
-    answer: 'Store Betterdrew hygienically as directed on the package. For the best experience, serve chilled.',
-  },
-  {
-    question: 'How long can I keep it after opening?',
-    answer: 'Consume within 5 days of opening the pack, as stated on the product packaging.',
-  },
-  {
-    question: 'Does Betterdrew contain preservatives?',
-    answer: 'No. Betterdrew contains no preservatives.',
-  },
-];
+import { faqData, FaqItem } from '@/data/faq';
 
 interface AccordionItemProps {
   question: string;
@@ -44,9 +11,9 @@ interface AccordionItemProps {
   isOpen: boolean;
   onClick: () => void;
 }
-const AccordionItem: React.FC<AccordionItemProps> = ({ question, answer, isOpen, onClick }) => {
+const AccordionItem: React.FC<AccordionItemProps> = ({ question, answer, isOpen, onClick }: AccordionItemProps) => {
   return (
-    <div className="border-b border-drew-soft-border/70">
+    <div className="border-b border-drew-soft-border/70 faq-item-reveal">
       <button
         onClick={onClick}
         className="w-full flex justify-between items-center text-left text-lg font-medium text-drew-deep-green py-5"
@@ -87,31 +54,38 @@ const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
+  gsap.registerPlugin(ScrollTrigger);
+
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
-    const ctx = gsap.context(() => { // @ts-ignore
-        const headerElements = section.querySelectorAll('.faq-header-reveal');
-        const accordionElement = section.querySelector('.faq-accordion-reveal');
+    const ctx = gsap.context(() => {
+      const headerElements = gsap.utils.toArray('.faq-header-reveal');
+      const faqItems = gsap.utils.toArray('.faq-item-reveal');
 
-        if (section) {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top 75%',
-                    toggleActions: 'play none none none',
-                },
-            });
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%', // Start animation when 80% of the section is in view
+          once: true, // Play the animation only once
+        },
+      });
 
-            if (headerElements.length > 0) {
-                tl.fromTo(headerElements, { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.1, duration: 0.8, ease: 'power2.out' });
-            }
-            if (accordionElement) {
-                tl.fromTo(accordionElement, { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power2.out' }, headerElements.length > 0 ? "-=0.5" : 0);
-            }
-        }
-    }, sectionRef);
+      tl.from(headerElements, {
+        opacity: 0,
+        y: 20,
+        stagger: 0.1,
+        duration: 0.6,
+        ease: 'power2.out',
+      }).from(faqItems, {
+        opacity: 0,
+        y: 20,
+        stagger: 0.1,
+        duration: 0.6,
+        ease: 'power2.out',
+      }, '-=0.3');
+    }, section);
     return () => ctx.revert();
   }, []);
 
@@ -123,10 +97,10 @@ const FAQ = () => {
     <section ref={sectionRef} className="w-full bg-drew-warm-ivory py-8 px-4">
       <div className="max-w-[1400px] mx-auto bg-drew-soft-white rounded-3xl shadow-soft overflow-hidden p-8 md:p-12 lg:p-16">
         <div className="text-center mb-12 sm:mb-14 lg:mb-16">
-          <div className="faq-header-reveal invisible inline-block bg-muted-gold/20 text-muted-gold text-sm font-semibold px-4 py-1.5 rounded-full uppercase tracking-medium">SUPPORT</div>
-          <h2 className="faq-header-reveal invisible mt-5 text-4xl font-bold tracking-tight text-forest-green sm:text-5xl lg:text-[52px] lg:leading-tight">Everything you need to know.</h2>
+          <div className="faq-header-reveal inline-block bg-muted-gold/20 text-muted-gold text-sm font-semibold px-4 py-1.5 rounded-full uppercase tracking-medium">SUPPORT</div>
+          <h2 className="faq-header-reveal mt-5 text-4xl font-bold tracking-tight text-forest-green sm:text-5xl lg:text-[52px] lg:leading-tight">Everything you need to know.</h2>
         </div>
-        <div className="faq-accordion-reveal invisible bg-drew-warm-ivory/80 backdrop-blur-sm rounded-2xl shadow-soft p-2 sm:p-4">
+        <div className="bg-drew-warm-ivory/80 backdrop-blur-sm rounded-2xl shadow-soft p-2 sm:p-4">
           {faqData.map((item, index) => (
             <AccordionItem
               key={index}

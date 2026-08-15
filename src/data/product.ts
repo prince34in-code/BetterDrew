@@ -8,6 +8,7 @@ export interface Product {
   category?: string;
   packSize?: string;
   price?: number | null;
+  status?: 'available' | 'coming-soon';
   ingredients?: string[] | null;
   nutrition?: Record<string, string> | null;
   verifiedClaims?: string[];
@@ -28,7 +29,7 @@ export interface ProductWithPacks extends Product {
   packs: PackOption[];
 }
 
-import BetterdrewBottleAsset from '@/assets/images/hero/hero-bottle.webp';
+import BetterdrewBottleAsset from '@/assets/product-showcase/bottle-1.webp';
 
 const baseProduct: Omit<ProductWithPacks, 'packs' | 'price'> = {
   id: 'betterdrew-coconut-water',
@@ -36,6 +37,7 @@ const baseProduct: Omit<ProductWithPacks, 'packs' | 'price'> = {
   name: 'Young Coconut Water',
   category: 'Beverage',
   packSize: '200ml',
+  status: 'available',
   image: BetterdrewBottleAsset,
   description: '100% natural young coconut water with no added sugar or preservatives. Pure, crisp hydration sourced from young coconuts.',
 };

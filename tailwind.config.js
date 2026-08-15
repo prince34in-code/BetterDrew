@@ -19,6 +19,10 @@ module.exports = {
         'drew-dark-text': '#123B2A',
         'drew-secondary-text': '#315640',
         'drew-soft-border': '#C9DEA2',
+        'drew-cream': '#F7F8ED',
+        'drew-mint': '#E4F3E8',
+        'drew-light-blue': '#DCEEF5', // Corrected value
+        'drew-lavender': '#EDE8F5', // Corrected value
 
         // Existing semantic aliases used throughout the site
         'forest-green': '#123B2A',

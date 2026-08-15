@@ -1,97 +1,84 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { ShoppingCart, Menu, X } from 'lucide-react';
 import { siteData } from '@/data/site';
-import { useCart } from "@/context/CartContext";
 
+import { useCart } from '@/context/CartContext';
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const lastScrollY = useRef(0);
+
   const { getItemCount } = useCart();
   const itemCount = getItemCount();
 
   useEffect(() => {
     const handleScroll = () => {
-      // A small threshold to prevent the effect from triggering on minor scrolls
-      setIsScrolled(window.scrollY > 10);
+      if (isMobileMenuOpen) {
+        setIsNavbarVisible(true);
+        return;
+      }
+
+      const currentScrollY = window.scrollY;
+      const scrollThreshold = 5; // To prevent flickering on minor scrolls
+
+      if (currentScrollY <= 80) {
+        setIsNavbarVisible(true);
+      } else if (currentScrollY > lastScrollY.current && Math.abs(currentScrollY - lastScrollY.current) > scrollThreshold) {
+        setIsNavbarVisible(false); // Scrolling down
+      } else if (currentScrollY < lastScrollY.current && Math.abs(currentScrollY - lastScrollY.current) > scrollThreshold) {
+        setIsNavbarVisible(true); // Scrolling up
+      }
+
+      lastScrollY.current = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-    `relative px-4 py-2 rounded-full transition-all duration-300 text-drew-deep-green ${
-      isActive 
-        ? 'font-semibold bg-drew-deep-green/10' 
-        : 'font-medium hover:bg-drew-deep-green/5'}`;
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isMobileMenuOpen]);
 
   return (
     <header
-      className="fixed top-0 left-0 w-full z-50 p-4"
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-transform duration-300 ease-out ${isNavbarVisible ? 'translate-y-0' : '-translate-y-full'}`}
     >
-      <nav className={`relative h-[64px] w-[calc(100%-32px)] max-w-7xl mx-auto flex items-center justify-between px-6 rounded-full border transition-all duration-500 ease-in-out ${
-        isScrolled 
-          ? 'bg-warm-white/80 backdrop-blur-lg shadow-xl border-warm-white/20' 
-          : 'bg-warm-white/50 backdrop-blur-md shadow-lg border-warm-white/10'
-      }`}>
-        {/* Logo */}
-        <div className="flex-shrink-0">
-          <Link to="/" aria-label="Betterdrew Home" className="text-2xl font-bold tracking-wider text-drew-deep-green">
-            {siteData.brandName.toUpperCase()}
-          </Link>
-        </div>
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center justify-center space-x-8">
-          <NavLink to="/" end className={navLinkClass}>Home</NavLink>
-          <NavLink to="/product" className={navLinkClass}>Product</NavLink>
-          <Link to="/#story" className="relative px-4 py-2 rounded-full transition-all duration-300 text-drew-deep-green font-medium hover:bg-drew-deep-green/5">About</Link>
-          <Link to="/#contact" className="relative px-4 py-2 rounded-full transition-all duration-300 text-drew-deep-green font-medium hover:bg-drew-deep-green/5">Contact</Link>
-        </div>
-
-        {/* Actions: Cart & Mobile Menu */}
-        <div className="flex-shrink-0 flex items-center gap-4">
-          <div className="hidden md:block">
-            <Link to="/cart" aria-label="View Cart" className="relative text-drew-deep-green hover:text-drew-lime-accent transition-colors duration-300">
-                <ShoppingCart size={24} />
+      {/* Unified Navbar */}
+      <nav className={`relative w-full grid grid-cols-3 items-center transition-colors duration-300 h-[64px] md:h-[68px] lg:h-[72px] px-4 md:px-6 lg:px-10 bg-transparent`}>
+          <div className="flex justify-start">
+            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white z-10 relative p-2 -m-2">
+                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+          <div className="flex justify-center">
+            <Link to="/" aria-label="Betterdrew Home" className="flex items-center justify-center">
+              <div className="relative flex flex-col items-center justify-center font-black tracking-tighter text-white w-[110px] h-[44px] md:w-[120px] md:h-[50px]" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.35)' }}>
+                <span className="block text-[22px] md:text-[24px] leading-[0.9]">BETTER</span>
+                <span className="block text-[22px] md:text-[24px] leading-[0.9] rotate-[-8deg] mt-1">
+                  DREW<span className="ml-1 tracking-[0.1em]">...</span>
+                </span>
+              </div>
+            </Link>
+          </div>
+          <div className="flex justify-end">
+            <Link to="/cart" aria-label="View Cart" className="relative text-white p-2 -m-2">
+                <ShoppingCart className="w-6 h-6" />
                 {itemCount > 0 && (
-                  <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-drew-lime-accent text-xs font-bold text-drew-deep-green">
+                  <span className="absolute top-0 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-drew-lime-accent text-xs font-bold text-drew-deep-green">
                     {itemCount}
                   </span>
                 )}
             </Link>
           </div>
-          
-          <div className="md:hidden">
-            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-drew-deep-green z-10 relative">
-                {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          </div>
-        </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Unified Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-4 left-4 right-4 mt-[80px] bg-warm-white/90 backdrop-blur-lg rounded-3xl shadow-xl border border-warm-white/20">
-          <div className="flex flex-col items-center space-y-6 py-8">
+        <div className="fixed top-[64px] md:top-[68px] lg:top-[72px] right-4 z-40 w-[min(340px,calc(100vw-32px))] md:w-[360px] bg-white/75 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30">
+          <div className="flex flex-col items-center space-y-4 p-6">
             <Link to="/" className="text-drew-deep-green text-xl font-semibold" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
             <Link to="/product" className="text-drew-deep-green text-xl font-semibold" onClick={() => setIsMobileMenuOpen(false)}>Product</Link>
-            <Link to="/#story" className="text-drew-deep-green text-xl font-semibold" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
-            <Link to="/#contact" className="text-drew-deep-green text-xl font-semibold" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
-            <div className="pt-4">
-              <Link to="/cart" aria-label="View Cart" className="relative text-drew-deep-green" onClick={() => setIsMobileMenuOpen(false)}>
-                  <ShoppingCart size={28} />
-                  {itemCount > 0 && (
-                    <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-drew-lime-accent text-xs font-bold text-drew-deep-green">
-                      {itemCount}
-                    </span>
-                  )}
-              </Link>
-            </div>
+            <Link to="/about" className="text-drew-deep-green text-xl font-semibold" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
+            <Link to="/contact" className="text-drew-deep-green text-xl font-semibold" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
           </div>
         </div>
       )}

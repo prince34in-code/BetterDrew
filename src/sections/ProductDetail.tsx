@@ -3,6 +3,7 @@ import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { betterdrewProduct, PackOption } from '@/data/product';
 import { CheckCircle, Minus, Plus, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useCart } from '@/context/CartContext';
 
 
 const ProductDetail: React.FC = () => {
@@ -10,7 +11,7 @@ const ProductDetail: React.FC = () => {
   const [quantity, setQuantity] = useState(1);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  const { addToCart } = { addToCart: (product: any, pack: any, qty: any) => console.log('Add to cart:', product.name, pack.name, qty) }; // Placeholder
+  const { addToCart } = useCart();
   const navigate = useNavigate();
 
   const handleQuantityChange = (amount: number) => {

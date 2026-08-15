@@ -3,6 +3,11 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+import instagramIcon from '@/assets/common/instagram.svg';
+import facebookIcon from '@/assets/common/facebook.svg';
+import xIcon from '@/assets/common/x.svg';
+
 import { siteData } from '@/data/site';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -26,33 +31,36 @@ const footerLinks = {
 };
 const policyLinks = [{ name: 'Privacy Policy', href: '#' }, { name: 'Terms of Service', href: '#' }]; // No change requested
 
-const socialIcons = [
-  { name: 'Instagram', path: 'M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01' },
-  { name: 'Facebook', path: 'M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z' },
-  { name: 'X', path: 'M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z' },
+const socialData = [
+  { name: 'Instagram', icon: instagramIcon, href: '#' },
+  { name: 'Facebook', icon: facebookIcon, href: '#' },
+  { name: 'X', icon: xIcon, href: '#' },
 ];
 
 const Footer = () => {
   const containerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".gsap-footer-item",
         { y: 20, opacity: 0 },
         {
-          y: 0,
-          opacity: 1,
           stagger: 0.1,
           duration: 0.8,
           ease: 'power2.out',
+          y: 0,
+          opacity: 1,
           scrollTrigger: {
-            trigger: containerRef.current,
+            trigger: container,
             start: 'top 85%',
           }
         }
       )
-    }, containerRef);
+    }, container);
     return () => ctx.revert();
   }, []);
 
@@ -62,7 +70,7 @@ const Footer = () => {
       id="contact"
       className="relative w-full bg-drew-warm-ivory text-drew-soft-white py-8 px-4"
     >
-      <div className="max-w-[1400px] mx-auto bg-[#111312] rounded-3xl p-8 md:p-12 lg:p-16 border border-white/5">
+      <div className="max-w-[1400px] mx-auto bg-[#111312] rounded-3xl p-8 md:p-10 lg:p-12 border border-white/5">
         {/* Top Section: Newsletter & Social */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div className="gsap-footer-item">
@@ -81,7 +89,7 @@ const Footer = () => {
         </div>
 
         {/* Divider */}
-        <hr className="gsap-footer-item my-12 border-white/10" />
+        <hr className="gsap-footer-item my-10 border-white/10" />
 
         {/* Middle Section: Navigation */}
         <div className="gsap-footer-item grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -101,11 +109,13 @@ const Footer = () => {
           ))}
           <div className="col-span-2 md:col-span-1 flex items-start md:justify-end">
             <div className="flex items-center gap-5">
-              {socialIcons.map(social => ( 
-                <a key={social.name} href="#" aria-label={social.name} className="text-white/80 hover:text-drew-lime-accent transition-colors duration-200">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d={social.path} />
-                  </svg>
+              {socialData.map(social => (
+                <a key={social.name} href={social.href} aria-label={social.name} className="opacity-80 hover:opacity-100 transition-opacity duration-200">
+                  <img
+                    src={social.icon}
+                    alt={`${social.name} logo`}
+                    className="w-6 h-6"
+                  />
                 </a>
               ))}
             </div>
@@ -113,7 +123,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section: Copyright & Policies */}
-        <div className="gsap-footer-item mt-16 pt-8 border-t border-white/10">
+        <div className="gsap-footer-item mt-12 pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
               <h3 className="text-2xl font-bold tracking-wider text-white">{siteData.brandName.toUpperCase()}</h3>

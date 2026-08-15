@@ -1,77 +1,77 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import SplitType from 'split-type';
+import { betterdrewProduct } from '@/data/product';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const BrandStory = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const story = containerRef.current;
-    if (!story) return;
-
-    const imageContainer = story.querySelector('.image-placeholder-container');
-    const textContent = story.querySelector('.text-content');
-    
-    if (!imageContainer || !textContent) return;
-    
-    const textParagraph = textContent.querySelector('p');
-    if (!textParagraph) return;
+    const section = sectionRef.current;
+    if (!section) return;
 
     const ctx = gsap.context(() => {
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: story,
-                start: 'top center',
-                end: 'center center',
-                scrub: 1,
-            },
-        });
+      const imageEl = section.querySelector('.gsap-story-image');
+      const textItems = gsap.utils.toArray('.gsap-story-text-item');
 
-        // Image reveal (clipPath)
-        tl.fromTo(imageContainer.querySelector('.image-reveal'),
-            { clipPath: 'inset(0 0 100% 0)' },
-            { clipPath: 'inset(0 0 0% 0)', ease: 'power3.out', duration: 0.8 }
-        );
-        
-        // Text reveal
-        const split = new SplitType(textParagraph, { types: 'lines' });
-        gsap.from(split.lines, {
-            y: 50,
-            opacity: 0,
-            stagger: 0.15,
-            duration: 0.8,
-            ease: 'power3.out',
-            scrollTrigger: {
-                trigger: textContent,
-                start: 'top 80%',
-            }
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 75%',
+          once: true,
+        }
+      });
+
+      if (imageEl) {
+        tl.from(imageEl, {
+          autoAlpha: 0,
+          y: 30,
+          scale: 0.95,
+          duration: 1,
+          ease: 'power3.out'
         });
-    }, story);
+      }
+
+      if (textItems.length > 0) {
+        tl.from(textItems, {
+          autoAlpha: 0,
+          y: 20,
+          stagger: 0.1,
+          duration: 0.8,
+          ease: 'power2.out'
+        }, imageEl ? "-=0.7" : 0);
+      }
+    }, section);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={containerRef} id="story" className="w-full max-w-[1400px] mx-auto my-12 p-8 md:p-12 lg:p-16 rounded-3xl shadow-xl overflow-hidden bg-drew-soft-white">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center">
-        <div className="image-placeholder-container group relative h-[300px] sm:h-[400px] md:h-[540px] w-full shadow-xl rounded-[32px] overflow-hidden">
-          <div className="image-reveal absolute inset-0">
-            <img src="https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?q=80&w=2970&auto=format&fit=crop" alt="Lush, natural landscape representing the Betterdrew brand ethos" className="h-full w-full object-cover rounded-[32px] transition-transform duration-300 ease-in-out group-hover:scale-[1.03]" />
-          </div>
-        </div>
-        <div className="text-content flex justify-center">
+    <section ref={sectionRef} id="story" className="w-full bg-drew-warm-ivory py-8 px-4">
+      <div className="max-w-[1400px] mx-auto bg-drew-soft-white rounded-3xl shadow-xl overflow-hidden p-8 md:p-10 lg:p-12 border border-drew-soft-border/50">
+        <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center">
+          {/* Text Content - Left */}
+          <div className="flex justify-center order-2 md:order-1">
             <div className="max-w-xl">
-                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-drew-coconut-green tracking-wide">Our Philosophy</h3>
-                <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-forest-green/90 leading-relaxed mt-3 sm:mt-4">
-                    We believe in clarity. In a world full of noise and buzzwords, we choose transparency. Our journey is about creating a straightforward, quality product you can understand and trust.
+              <h2 className="gsap-story-text-item text-4xl sm:text-5xl font-bold text-drew-deep-green tracking-tight leading-tight">
+                Hydration that keeps you moving.
+              </h2>
+              <div className="mt-8 space-y-4 text-lg text-drew-secondary-text">
+                <p className="gsap-story-text-item leading-relaxed">
+                  We believe better performance starts with better hydration. Made with young coconut water and natural electrolytes, BetterDrew keeps hydration simple, clean, and ready for whatever your day demands.
                 </p>
-                <button className="mt-4 sm:mt-6 px-6 py-2 bg-drew-deep-green text-drew-soft-white font-semibold rounded-lg shadow-md transition-all duration-300 hover:bg-drew-lime-accent hover:text-drew-deep-green hover:shadow-lg self-start">
-                    Learn Our Story
-                </button>
+                <p className="gsap-story-text-item !mt-6">Young coconut water.</p>
+                <p className="gsap-story-text-item">Natural electrolytes.</p>
+                <p className="gsap-story-text-item">Nothing unnecessary.</p>
+              </div>
             </div>
+          </div>
+          {/* Image Content - Right */}
+          <div className="gsap-story-image group relative h-[300px] sm:h-[400px] md:h-full w-full order-1 md:order-2">
+            <img src={betterdrewProduct.image} alt="Betterdrew Product Bottle" className="h-full w-full object-contain transition-transform duration-300 ease-in-out group-hover:scale-[1.03]" />
+          </div>
         </div>
       </div>
     </section>
