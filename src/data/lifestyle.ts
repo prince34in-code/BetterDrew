@@ -14,26 +14,26 @@ export interface LifestyleItem {
 export const lifestyleData: LifestyleItem[] = [
   {
     category: 'MORNING RITUAL',
-    title: 'Start Fresh',
-    description: 'Begin your day with the pure, natural hydration that awakens your senses and sets a positive tone.',
+    title: 'Start before the coffee does',
+    description: 'Electrolytes before caffeine — a gentler way to wake the body up.',
     imageUrl: lifestyleImage1,
   },
   {
     category: 'FITNESS & RECOVERY',
-    title: 'Elevate Performance',
-    description: 'Replenish essential electrolytes and recover faster after every workout, naturally and effectively.',
+    title: 'What you lost, replaced',
+    description: 'Sodium and potassium leave with your sweat. This is how they come back.',
     imageUrl: lifestyleImage2,
   },
   {
     category: 'WORK & PRODUCTIVITY',
-    title: 'Natural Focus',
-    description: 'Stay refreshed and hydrated through long days with clean, naturally refreshing coconut water.',
+    title: 'Clearer, without the crash',
+    description: 'No sugar spike, no dip an hour later — just steady hydration through a long day.',
     imageUrl: lifestyleImage3,
   },
   {
     category: 'TRAVEL & ADVENTURE',
-    title: 'Your Companion',
-    description: 'A refreshing companion for everyday journeys, wherever the day takes you.',
+    title: 'Wherever the day takes you',
+    description: "Light, portable, and built for a body that is on the move.",
     imageUrl: lifestyleImage4,
   },
 ];

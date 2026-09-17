@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { prefersReducedMotion } from '@/utils/motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -8,6 +9,8 @@ const Testimonials = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const section = sectionRef.current;
     if (!section) return;
 

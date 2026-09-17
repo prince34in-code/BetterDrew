@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { betterdrewProduct } from '@/data/product';
+import { prefersReducedMotion } from '@/utils/motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,6 +10,8 @@ const BrandStory = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const section = sectionRef.current;
     if (!section) return;
 

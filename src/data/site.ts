@@ -6,6 +6,6 @@ interface SiteData {
 
 export const siteData: SiteData = {
   brandName: 'Betterdrew',
-  tagline: 'Beyond Refreshment',
+  tagline: 'One ingredient. No exceptions.',
   coreMessage: 'Read Beyond the Buzzwords.',
 };

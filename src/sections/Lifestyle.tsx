@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight } from 'lucide-react';
 
 import { lifestyleData, LifestyleItem } from '@/data/lifestyle';
+import { prefersReducedMotion } from '@/utils/motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -65,6 +66,8 @@ const Lifestyle = () => {
 
     const mm = gsap.matchMedia(container);
 
+    if (prefersReducedMotion()) return;
+
     mm.add("(min-width: 768px)", () => {
       const cards = gsap.utils.toArray<HTMLElement>('.lifestyle-card');
       cards.forEach((card, index) => {
@@ -110,10 +113,10 @@ const Lifestyle = () => {
             Lifestyle
           </div>
           <h2 className="lifestyle-header-reveal mt-5 text-4xl max-w-xs mx-auto sm:max-w-none sm:mx-0 sm:text-5xl lg:text-[52px] font-bold tracking-tight leading-tight text-drew-deep-green">
-            Hydration For Every Moment.
+            Hydration for every moment.
           </h2>
           <p className="lifestyle-header-reveal hidden sm:block mt-4 max-w-2xl mx-auto text-lg leading-relaxed text-drew-secondary-text sm:text-xl">
-            Pure young coconut water, naturally refreshing and thoughtfully made for everyday life.
+            Not just for workouts. For whatever your day actually looks like.
           </p>
         </div>
         <div className="space-y-5 sm:space-y-6 lg:space-y-8">

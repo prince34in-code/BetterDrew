@@ -10,38 +10,38 @@ gsap.registerPlugin(ScrollTrigger);
 const gridCardsData = [
   {
     type: 'text',
-    title: 'Hydration that fits your day.',
-    description: 'A clean source of natural electrolytes, made for everyday moments.',
+    title: 'Hydration your body actually recognizes.',
+    description: 'Coconut water carries the same electrolyte profile your cells lose through sweat — sodium, potassium, magnesium — in a ratio your body does not have to work to absorb.',
     className: 'md:order-2 md:col-start-2 md:col-span-2 md:row-start-1 bg-orange-100 text-drew-deep-green md:h-[250px]',
   },
   {
     type: 'image',
     imageUrl: benefitLandscape1,
-    alt: 'Woman smiling and holding a bottle of Betterdrew coconut water',
+    alt: 'Before the day starts',
     className: 'md:order-3 md:col-start-2 md:row-start-2 md:h-[290px]',
   },
   {
     type: 'text',
-    title: 'Simple ingredients.\nA better choice.',
-    description: 'No added sugar. No preservatives. Just young coconut water.',
+    title: 'One ingredient. That is the whole list.',
+    description: 'No stabilizers, no flavor concentrate, no added sugar to mask anything — because there is nothing to mask.',
     className: 'md:order-5 md:col-start-2 md:col-span-2 md:row-start-3 bg-rose-200 text-drew-deep-green text-center md:h-[250px]',
   },
   {
     type: 'image',
     imageUrl: benefitLandscape2,
-    alt: 'Woman meditating with a bottle of Betterdrew coconut water',
+    alt: 'Between sets',
     className: 'md:order-6 md:col-start-1 md:row-start-3 md:h-[290px]',
   },
   {
     type: 'text',
-    title: 'Better hydration.\nBetter every day.',
-    description: 'Pure young coconut water, naturally refreshing and thoughtfully made.',
+    title: 'Every bottle, the same day it was opened.',
+    description: 'We do not hold inventory for months. Each batch is cut, extracted, and bottled within hours — so what you drink is close to what you would get straight from the coconut.',
     className: 'md:order-1 md:col-start-1 md:row-start-1 md:row-span-2 bg-drew-deep-green text-drew-soft-white md:h-[560px]',
   },
   {
     type: 'image',
     imageUrl: benefitPortrait1,
-    alt: 'Woman holding a bottle of Betterdrew coconut water after a workout',
+    alt: 'After, not during',
     className: 'md:order-4 md:col-start-3 md:row-start-2 md:row-span-2 md:h-[560px]',
   },
 ];
@@ -168,6 +168,11 @@ const Benefits = () => {
       className="w-full bg-drew-warm-ivory py-8 px-4"
     >
       <div className="mx-auto max-w-[1400px]">
+        <div className="mb-8">
+          <span className="inline-block rounded-full bg-drew-lime-accent/30 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-drew-deep-green">
+            Why It Works
+          </span>
+        </div>
         {/* Masonry */}
         <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-3 md:auto-rows-auto md:grid-rows-[250px_290px_1fr]">
           {gridCardsData.map((card, index) => (

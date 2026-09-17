@@ -2,32 +2,43 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ChevronDown } from 'lucide-react';
 
-import { faqData, FaqItem } from '@/data/faq';
+import { faqData } from '@/data/faq';
+import { prefersReducedMotion } from '@/utils/motion';
 
 interface AccordionItemProps {
   question: string;
   answer: string;
   isOpen: boolean;
   onClick: () => void;
+  index: number;
 }
-const AccordionItem: React.FC<AccordionItemProps> = ({ question, answer, isOpen, onClick }: AccordionItemProps) => {
+const AccordionItem: React.FC<AccordionItemProps> = ({ question, answer, isOpen, onClick, index }: AccordionItemProps) => {
+  const itemNumber = String(index + 1).padStart(2, '0');
+
   return (
-    <div className="border-b border-drew-soft-border/70 faq-item-reveal">
+    <div className="faq-item-reveal overflow-hidden rounded-[28px] border border-drew-soft-border/60 bg-drew-cream shadow-[0_14px_34px_rgba(18,59,42,0.07)] transition-shadow duration-300 ease-out hover:shadow-[0_18px_40px_rgba(18,59,42,0.1)]">
       <button
+        type="button"
         onClick={onClick}
-        className="w-full flex justify-between items-center text-left text-lg font-medium text-drew-deep-green py-5"
+        aria-expanded={isOpen}
+        className="flex w-full items-center gap-4 px-5 pb-4 pt-5 text-left sm:gap-6 sm:px-7 sm:pb-5 sm:pt-6 lg:px-8"
       >
-        <span>{question}</span>
-        <motion.div
-          animate={{ rotate: isOpen ? 45 : 0 }}
+        <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-drew-deep-green/10 bg-drew-soft-white text-xs font-bold leading-none text-drew-deep-green shadow-[inset_0_0_0_1px_rgba(18,59,42,0.04)] sm:h-11 sm:w-11 sm:text-sm">
+          {itemNumber}
+        </span>
+        <span className="min-w-0 flex-1 text-base font-bold leading-snug text-drew-deep-green sm:text-xl lg:text-2xl">
+          {question}
+        </span>
+        <motion.span
+          aria-hidden="true"
+          animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
+          className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-drew-warm-ivory/80 text-drew-deep-green sm:h-11 sm:w-11"
         >
-          <svg className="w-5 h-5 text-drew-secondary-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-          </svg>
-        </motion.div>
+          <ChevronDown className="h-5 w-5" strokeWidth={2.25} />
+        </motion.span>
       </button>
       <AnimatePresence initial={false}>
         {isOpen && (
@@ -36,13 +47,15 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ question, answer, isOpen,
             animate="open"
             exit="collapsed"
             variants={{
-              open: { opacity: 1, height: 'auto', marginTop: '8px' },
-              collapsed: { opacity: 0, height: 0, marginTop: 0 },
+              open: { opacity: 1, height: 'auto' },
+              collapsed: { opacity: 0, height: 0 },
             }}
             transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
             className="overflow-hidden text-drew-secondary-text"
           >
-            <p className="pt-2 pb-4 pr-8">{answer}</p>
+            <p className="px-5 pb-6 pl-[4.75rem] text-sm leading-7 sm:pl-[6.25rem] sm:pr-16 sm:text-base lg:pl-[6.75rem]">
+              {answer}
+            </p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -57,6 +70,8 @@ const FAQ = () => {
   gsap.registerPlugin(ScrollTrigger);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const section = sectionRef.current;
     if (!section) return;
 
@@ -100,7 +115,7 @@ const FAQ = () => {
           <div className="faq-header-reveal inline-block bg-muted-gold/20 text-muted-gold text-sm font-semibold px-4 py-1.5 rounded-full uppercase tracking-medium">SUPPORT</div>
           <h2 className="faq-header-reveal mt-5 text-4xl font-bold tracking-tight text-forest-green sm:text-5xl lg:text-[52px] lg:leading-tight">Everything you need to know.</h2>
         </div>
-        <div className="bg-drew-warm-ivory/80 backdrop-blur-sm rounded-2xl shadow-soft p-2 sm:p-4">
+        <div className="mx-auto max-w-5xl space-y-4 sm:space-y-5 lg:space-y-6">
           {faqData.map((item, index) => (
             <AccordionItem
               key={index}
@@ -108,6 +123,7 @@ const FAQ = () => {
               answer={item.answer}
               isOpen={openIndex === index}
               onClick={() => handleToggle(index)}
+              index={index}
             />
           ))}
         </div>

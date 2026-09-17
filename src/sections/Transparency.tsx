@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { siteData } from '@/data/site';
+import { prefersReducedMotion } from '@/utils/motion';
 
 // Placeholder for the product label image. This asset needs to be created.
 const ProductLabelImage = '/src/assets/product/label.png';
@@ -10,6 +11,8 @@ const Transparency = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const section = sectionRef.current;
     if (!section) return;
 

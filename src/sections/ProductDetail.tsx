@@ -107,7 +107,7 @@ const ProductDetail: React.FC = () => {
             <span className="text-sm font-bold uppercase tracking-widest text-drew-coconut-green mb-2 block">
               Our Signature Product
             </span>
-            <h1 className="text-4xl md:text-[42px] font-extrabold text-drew-deep-green mb-4" style={{ fontFamily: '"General Sans", sans-serif' }}>
+            <h1 className="text-4xl md:text-[42px] font-extrabold text-drew-deep-green mb-4 font-sans">
               {betterdrewProduct.name}
             </h1>
             <p className="text-lg text-drew-secondary-text max-w-md mb-6">

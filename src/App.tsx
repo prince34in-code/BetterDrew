@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Lenis from 'lenis';
-import { siteData } from '@/data/site';
+import { MotionConfig } from 'framer-motion';
 import { CartProvider } from "@/context/CartContext";
+import { prefersReducedMotion } from '@/utils/motion';
 
 import ScrollToTop from '../ScrollToTop';
 import Navbar from '@/components/common/Navbar';
@@ -72,6 +73,8 @@ const NotFoundPage = () => (
 
 function App() {
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const lenis = new Lenis();
     function raf(time: number) {
       lenis.raf(time);
@@ -98,21 +101,23 @@ function App() {
   }, []);
 
   return (
-    <CartProvider>
-      <ScrollToTop />
-      <Navbar />
-      <main>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/product" element={<ProductPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </main>
-    </CartProvider>
+    <MotionConfig reducedMotion="user">
+      <CartProvider>
+        <ScrollToTop />
+        <Navbar />
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/product" element={<ProductPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </main>
+      </CartProvider>
+    </MotionConfig>
   )
 }
 

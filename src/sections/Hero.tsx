@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import SplitType from 'split-type';
 import HeroBackground from '@/assets/hero/background.webp';
+import { prefersReducedMotion } from '@/utils/motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,6 +14,8 @@ const Hero = () => {
   const bgImageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const headline = headlineRef.current;
     const contentElements = heroContentRef.current?.querySelectorAll('.gsap-hero-reveal');
     const bgImage = bgImageRef.current;
@@ -27,20 +30,27 @@ const Hero = () => {
         { scale: 1.05, duration: 10, ease: 'none' }
       );
 
-      // 2. Staggered character reveal for the main headline
-      const splitHeadline = new SplitType(headline, { types: 'chars' });
-      
-      // 3. Timeline for entrance animations
+      // Keep the reveal at the element level so the semantic heading remains intact.
       const tl = gsap.timeline({ delay: 0.3 });
-      tl.from(splitHeadline.chars, {
-        y: 40,
+      tl.from(headline, {
+        y: 24,
         opacity: 0,
-        skewX: -15,
-        stagger: 0.03,
         duration: 0.8,
         ease: 'power3.out',
       })
       .fromTo(contentElements, { y: 20, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.15, duration: 0.8, ease: 'power2.out' }, '-=0.6');
+
+      gsap.to(headline, {
+        letterSpacing: '0.01em',
+        y: -8,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: container,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
 
     }, container);
 
@@ -55,30 +65,38 @@ const Hero = () => {
       className="w-full"
     >
       <div 
-        className="relative w-full h-[80vh] lg:h-[90vh] overflow-hidden bg-drew-deep-green flex items-center justify-center rounded-3xl"
+        className="relative w-full min-h-[640px] h-[78vh] overflow-hidden bg-drew-deep-green rounded-3xl sm:min-h-[680px] lg:h-[90vh] lg:min-h-[720px]"
       >
         <div ref={bgImageRef}
-        className="absolute inset-0 bg-cover bg-center will-change-transform"
+        className="absolute inset-y-0 right-0 z-0 w-[48%] bg-cover bg-center will-change-transform sm:w-[52%] lg:w-[68%]"
         style={{
           backgroundImage: `url(${HeroBackground})`,
-          backgroundPosition: 'center 50%'
         }}
       />
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+      <div className="absolute inset-y-0 left-0 z-10 w-[78%] bg-drew-deep-green sm:w-[72%] lg:w-[58%]" />
+      <div className="absolute inset-y-0 left-0 z-10 w-[78%] bg-gradient-to-r from-drew-deep-green via-drew-deep-green/95 to-transparent sm:w-[72%] lg:w-[58%]" />
 
-      <div ref={heroContentRef} className="relative z-10 text-center text-drew-soft-white px-4">
-        <div className="gsap-hero-reveal">
+      <div ref={heroContentRef} className="relative z-20 flex min-h-[640px] h-full w-[78%] items-center px-5 py-20 sm:min-h-[680px] sm:w-[72%] sm:px-10 sm:py-24 lg:w-[58%] lg:px-16 xl:px-24">
+        <div className="w-full max-w-[720px] text-left text-drew-soft-white">
           <h1
             ref={headlineRef}
-            className="text-4xl font-bold tracking-tight text-drew-soft-white sm:text-5xl lg:text-6xl max-w-[320px] mx-auto sm:max-w-none"
+            className="gsap-hero-reveal max-w-[720px] text-5xl font-black leading-[0.94] tracking-[-0.04em] text-drew-soft-white transition-[letter-spacing] duration-500 hover:tracking-[-0.01em] sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl"
             style={{ textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)' }}
           >
-            Young Coconut Water
+            <span className="block">No factory.</span>
+            <span className="block">No shortcuts.</span>
+            <span className="block">Just coconut.</span>
           </h1>
-          <p className="gsap-hero-reveal mt-3 text-lg font-medium text-drew-soft-white sm:text-xl md:text-2xl max-w-[320px] mx-auto sm:max-w-none" style={{ textShadow: '0 1px 6px rgba(0, 0, 0, 0.5)' }}>
-            Pure by nature. Made for every day.
+          <p className="gsap-hero-reveal mt-6 max-w-xl text-lg font-medium leading-relaxed text-drew-soft-white sm:text-xl md:text-2xl" style={{ textShadow: '0 1px 6px rgba(0, 0, 0, 0.5)' }}>
+            We don't concentrate it, add to it, or heat it. What's in the bottle is what came out of the coconut.
           </p>
+          <Link
+            to="/product"
+            className="gsap-hero-reveal mt-8 inline-flex items-center px-8 py-3 bg-drew-deep-green text-drew-soft-white font-extrabold text-lg rounded-full transition-all duration-300 ease-out transform-gpu hover:bg-drew-lime-accent hover:text-drew-deep-green hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-xl"
+          >
+            Shop Now →
+          </Link>
         </div>
       </div>
       </div>

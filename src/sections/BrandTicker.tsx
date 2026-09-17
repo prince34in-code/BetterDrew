@@ -13,19 +13,19 @@ import {
 } from 'lucide-react';
 
 const row1Items = [
-  { icon: ShieldCheck, label: 'No Preservatives' },
-  { icon: Leaf, label: 'No Added Sugar' },
-  { icon: MilkOff, label: 'Lactose Free' },
-  { icon: WheatOff, label: 'Gluten Free' },
-  { icon: Zap, label: 'Electrolyte Rich' },
+  { icon: ShieldCheck, label: 'Zero Preservatives' },
+  { icon: Leaf, label: 'Zero Added Sugar' },
+  { icon: MilkOff, label: 'Zero Dairy' },
+  { icon: WheatOff, label: 'Zero Gluten' },
+  { icon: Zap, label: 'Zero Concentrate' },
 ];
 
 const row2Items = [
-  { icon: CirclePlus, label: 'With Vitamin C' },
-  { icon: Droplet, label: '265 mg Potassium' },
-  { icon: Activity, label: '20 kcal / 200 ml' },
-  { icon: Wheat, label: '5 g Carbohydrates' },
-  { icon: Package, label: '200ml Pack' },
+  { icon: CirclePlus, label: '265mg Potassium' },
+  { icon: Droplet, label: '20 kcal per 200ml' },
+  { icon: Activity, label: '5g Carbs' },
+  { icon: Wheat, label: 'Vitamin C' },
+  { icon: Package, label: 'Bottled Same-Day' },
 ];
 
 const pillBackgroundColors = [

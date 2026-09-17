@@ -4,6 +4,7 @@ import BrandStory from '@/sections/BrandStory';
 import Footer from '@/sections/Footer';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { prefersReducedMotion } from '@/utils/motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,6 +12,8 @@ const AboutPage: React.FC = () => {
   const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const ctx = gsap.context(() => {
       // Hero Animation
       gsap.from('.gsap-about-hero-item', {

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight } from 'lucide-react';
@@ -9,6 +9,7 @@ import facebookIcon from '@/assets/common/facebook.svg';
 import xIcon from '@/assets/common/x.svg';
 
 import { siteData } from '@/data/site';
+import { prefersReducedMotion } from '@/utils/motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,18 +30,29 @@ const footerLinks = {
     { name: 'Returns & Refunds', href: '#' }, // Placeholder
   ],
 };
-const policyLinks = [{ name: 'Privacy Policy', href: '#' }, { name: 'Terms of Service', href: '#' }]; // No change requested
+const policyLinks = [
+  { name: 'Privacy Policy', href: 'https://betterdrew.com/privacy-policy' },
+  { name: 'Terms of Service', href: 'https://betterdrew.com/terms-of-service' },
+];
 
 const socialData = [
-  { name: 'Instagram', icon: instagramIcon, href: '#' },
-  { name: 'Facebook', icon: facebookIcon, href: '#' },
-  { name: 'X', icon: xIcon, href: '#' },
+  { name: 'Instagram', icon: instagramIcon, href: 'https://www.instagram.com/betterdrew/' },
+  { name: 'Facebook', icon: facebookIcon, href: 'https://www.facebook.com/betterdrew' },
+  { name: 'X', icon: xIcon, href: 'https://x.com/betterdrew' },
 ];
 
 const Footer = () => {
   const containerRef = useRef<HTMLElement>(null);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const handleNewsletterSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubscribed(true);
+  };
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const container = containerRef.current;
     if (!container) return;
 
@@ -74,17 +86,18 @@ const Footer = () => {
         {/* Top Section: Newsletter & Social */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div className="gsap-footer-item">
-            <span className="text-sm font-semibold uppercase tracking-widest text-drew-lime-accent">Stay in the know</span>
+            <span className="text-sm font-semibold uppercase tracking-widest text-drew-lime-accent">Stay In The Know</span>
             <h3 className="mt-2 text-3xl md:text-4xl font-bold tracking-tight text-white">Better hydration, delivered.</h3>
-            <p className="mt-3 text-white/70 max-w-md">Get product updates, new launches, and thoughtful hydration tips from Betterdrew.</p>
+            <p className="mt-3 text-white/70 max-w-md">Product updates, new launches, and the occasional hydration tip — nothing else.</p>
           </div>
           <div className="gsap-footer-item">
-            <form className="flex items-center border border-white/10 rounded-full p-1 bg-white/5">
-              <input type="email" placeholder="Enter your email address" className="w-full bg-transparent px-4 py-3 text-white placeholder-white/50 focus:outline-none" />
+            <form onSubmit={handleNewsletterSubmit} className="flex items-center border border-white/10 rounded-full p-1 bg-white/5">
+              <input type="email" name="email" required placeholder="Enter your email address" className="w-full bg-transparent px-4 py-3 text-white placeholder-white/50 focus:outline-none" />
               <button type="submit" aria-label="Subscribe" className="flex-shrink-0 w-12 h-12 bg-drew-lime-accent rounded-full flex items-center justify-center text-drew-deep-green hover:bg-opacity-90 transition-colors">
                 <ArrowRight size={20} />
               </button>
             </form>
+            {isSubscribed && <p className="mt-2 text-sm text-drew-lime-accent" aria-live="polite">Thanks for subscribing.</p>}
           </div>
         </div>
 
@@ -127,7 +140,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
               <h3 className="text-2xl font-bold tracking-wider text-white">{siteData.brandName.toUpperCase()}</h3>
-              <p className="text-white/70">Pure hydration. Nothing unnecessary.</p>
+              <p className="text-white/70">One ingredient. No exceptions.</p>
             </div>
             <p className="text-sm text-white/50">
             &copy; 2026 Betterdrew. Made in India.
