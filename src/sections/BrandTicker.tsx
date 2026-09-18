@@ -39,9 +39,9 @@ const MarqueeRow: React.FC<{
   items: { icon: React.ElementType; label: string }[];
   direction?: 'left' | 'right';
 }> = ({ items, direction = 'left' }) => (
-  <div className="relative flex overflow-hidden group">
+  <div className="relative flex w-full max-w-full overflow-hidden group">
     <div
-      className={`flex motion-safe:group-hover:[animation-play-state:paused] ${
+      className={`flex w-max shrink-0 motion-safe:group-hover:[animation-play-state:paused] ${
         direction === 'left'
           ? 'motion-safe:animate-marquee-to-left'
           : 'motion-safe:animate-marquee-to-right'
@@ -50,16 +50,16 @@ const MarqueeRow: React.FC<{
       {[...items, ...items].map((item, index) => (
         <div
           key={index} // Key needs to be unique across all rendered items, not just within the original `items` array
-          className={`flex items-center shrink-0 mx-3 px-6 py-3
+          className={`flex items-center shrink-0 mx-1.5 px-3 py-2 min-[768px]:mx-3 min-[768px]:px-6 min-[768px]:py-3
             ${pillBackgroundColors[index % pillBackgroundColors.length]}
             border border-drew-soft-border rounded-full shadow-sm`}
           aria-hidden={index >= items.length}
         >
           <item.icon
-            className="w-5 h-5 text-drew-lime-accent mr-3"
+            className="w-4 h-4 text-drew-lime-accent mr-2 min-[768px]:h-5 min-[768px]:w-5 min-[768px]:mr-3"
             strokeWidth={2}
           />
-          <span className="text-md font-medium text-drew-deep-green whitespace-nowrap">
+          <span className="text-xs font-medium text-drew-deep-green whitespace-nowrap min-[768px]:text-md">
             {item.label}
           </span>
         </div>
@@ -72,9 +72,9 @@ const BrandTicker: React.FC = () => {
   return (
     <section
       aria-label="Brand Values Marquee"
-      className="w-full py-6 sm:py-8 bg-drew-product-bg/70"
+      className="w-full bg-drew-product-bg/70 py-3 min-[768px]:py-8"
     >
-      <div className="space-y-4">
+      <div className="space-y-2 min-[768px]:space-y-4">
         <MarqueeRow items={row1Items} direction="left" />
         <MarqueeRow items={row2Items} direction="right" />
       </div>

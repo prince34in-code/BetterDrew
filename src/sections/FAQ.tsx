@@ -12,32 +12,26 @@ interface AccordionItemProps {
   answer: string;
   isOpen: boolean;
   onClick: () => void;
-  index: number;
 }
-const AccordionItem: React.FC<AccordionItemProps> = ({ question, answer, isOpen, onClick, index }: AccordionItemProps) => {
-  const itemNumber = String(index + 1).padStart(2, '0');
-
+const AccordionItem: React.FC<AccordionItemProps> = ({ question, answer, isOpen, onClick }: AccordionItemProps) => {
   return (
-    <div className="faq-item-reveal overflow-hidden rounded-[28px] border border-drew-soft-border/60 bg-drew-cream shadow-[0_14px_34px_rgba(18,59,42,0.07)] transition-shadow duration-300 ease-out hover:shadow-[0_18px_40px_rgba(18,59,42,0.1)]">
+    <div className="faq-item-reveal group border-b border-drew-soft-border/70 last:border-b-0">
       <button
         type="button"
         onClick={onClick}
         aria-expanded={isOpen}
-        className="flex w-full items-center gap-4 px-5 pb-4 pt-5 text-left sm:gap-6 sm:px-7 sm:pb-5 sm:pt-6 lg:px-8"
+        className="flex w-full items-center justify-between gap-6 py-4 text-left sm:py-5"
       >
-        <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-drew-deep-green/10 bg-drew-soft-white text-xs font-bold leading-none text-drew-deep-green shadow-[inset_0_0_0_1px_rgba(18,59,42,0.04)] sm:h-11 sm:w-11 sm:text-sm">
-          {itemNumber}
-        </span>
-        <span className="min-w-0 flex-1 text-base font-bold leading-snug text-drew-deep-green sm:text-xl lg:text-2xl">
+        <span className={`min-w-0 flex-1 text-base font-bold leading-snug transition-colors duration-200 sm:text-lg lg:text-xl ${isOpen ? 'text-drew-lime-accent' : 'text-drew-deep-green group-hover:text-drew-lime-accent'}`}>
           {question}
         </span>
         <motion.span
           aria-hidden="true"
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
-          className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-drew-warm-ivory/80 text-drew-deep-green sm:h-11 sm:w-11"
+          className="flex h-5 w-5 flex-shrink-0 items-center justify-center text-drew-deep-green"
         >
-          <ChevronDown className="h-5 w-5" strokeWidth={2.25} />
+          <ChevronDown className="h-4 w-4" strokeWidth={2} />
         </motion.span>
       </button>
       <AnimatePresence initial={false}>
@@ -53,7 +47,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ question, answer, isOpen,
             transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
             className="overflow-hidden text-drew-secondary-text"
           >
-            <p className="px-5 pb-6 pl-[4.75rem] text-sm leading-7 sm:pl-[6.25rem] sm:pr-16 sm:text-base lg:pl-[6.75rem]">
+            <p className="pb-4 pr-8 text-sm leading-7 text-drew-secondary-text sm:pb-5 sm:pr-12 sm:text-base">
               {answer}
             </p>
           </motion.div>
@@ -66,6 +60,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ question, answer, isOpen,
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const visibleFaqData = faqData.slice(0, 6);
 
   gsap.registerPlugin(ScrollTrigger);
 
@@ -109,21 +104,20 @@ const FAQ = () => {
   };
 
   return (
-    <section ref={sectionRef} className="w-full bg-drew-warm-ivory py-8 px-4">
-      <div className="max-w-[1400px] mx-auto bg-drew-soft-white rounded-3xl shadow-soft overflow-hidden p-8 md:p-12 lg:p-16">
-        <div className="text-center mb-12 sm:mb-14 lg:mb-16">
-          <div className="faq-header-reveal inline-block bg-muted-gold/20 text-muted-gold text-sm font-semibold px-4 py-1.5 rounded-full uppercase tracking-medium">SUPPORT</div>
-          <h2 className="faq-header-reveal mt-5 text-4xl font-bold tracking-tight text-forest-green sm:text-5xl lg:text-[52px] lg:leading-tight">Everything you need to know.</h2>
+    <section ref={sectionRef} className="w-full bg-drew-warm-ivory px-4 py-8">
+      <div className="mx-auto max-w-[1400px] overflow-hidden rounded-[24px] bg-drew-soft-white px-6 py-10 shadow-soft sm:px-8 sm:py-12 md:px-12 md:py-16 lg:px-16">
+        <div className="mb-8 text-center sm:mb-10">
+          <div className="faq-header-reveal inline-block bg-drew-lime-accent text-drew-deep-green text-sm font-semibold px-4 py-1.5 rounded-full uppercase tracking-medium">SUPPORT</div>
+          <h2 className="faq-header-reveal mt-5 text-3xl font-bold tracking-tight text-drew-deep-green sm:text-4xl lg:text-5xl lg:leading-tight">Everything you need to know.</h2>
         </div>
-        <div className="mx-auto max-w-5xl space-y-4 sm:space-y-5 lg:space-y-6">
-          {faqData.map((item, index) => (
+        <div className="mx-auto max-w-4xl">
+          {visibleFaqData.map((item, index) => (
             <AccordionItem
               key={index}
               question={item.question}
               answer={item.answer}
               isOpen={openIndex === index}
               onClick={() => handleToggle(index)}
-              index={index}
             />
           ))}
         </div>

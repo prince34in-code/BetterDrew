@@ -12,7 +12,7 @@ const gridCardsData = [
     type: 'text',
     title: 'Hydration your body actually recognizes.',
     description: 'Coconut water carries the same electrolyte profile your cells lose through sweat — sodium, potassium, magnesium — in a ratio your body does not have to work to absorb.',
-    className: 'md:order-2 md:col-start-2 md:col-span-2 md:row-start-1 bg-orange-100 text-drew-deep-green md:h-[250px]',
+    className: 'md:order-2 md:col-start-2 md:col-span-2 md:row-start-1 bg-orange-100 text-drew-deep-green',
   },
   {
     type: 'image',
@@ -24,7 +24,7 @@ const gridCardsData = [
     type: 'text',
     title: 'One ingredient. That is the whole list.',
     description: 'No stabilizers, no flavor concentrate, no added sugar to mask anything — because there is nothing to mask.',
-    className: 'md:order-5 md:col-start-2 md:col-span-2 md:row-start-3 bg-rose-200 text-drew-deep-green text-center md:h-[250px]',
+    className: 'md:order-5 md:col-start-2 md:col-span-2 md:row-start-3 bg-rose-200 text-drew-deep-green text-center',
   },
   {
     type: 'image',
@@ -36,7 +36,7 @@ const gridCardsData = [
     type: 'text',
     title: 'Every bottle, the same day it was opened.',
     description: 'We do not hold inventory for months. Each batch is cut, extracted, and bottled within hours — so what you drink is close to what you would get straight from the coconut.',
-    className: 'md:order-1 md:col-start-1 md:row-start-1 md:row-span-2 bg-drew-deep-green text-drew-soft-white md:h-[560px]',
+    className: 'md:order-1 md:col-start-1 md:row-start-1 bg-drew-deep-green text-drew-soft-white',
   },
   {
     type: 'image',
@@ -67,7 +67,7 @@ const GridCard = ({
 
   return (
     <div
-      className={`grid-card relative flex min-h-[240px] flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-soft transition-transform duration-300 ease-out hover:-translate-y-0.5 ${card.className}`}
+      className={`grid-card relative flex min-h-[240px] flex-col overflow-hidden rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-soft transition-transform duration-300 ease-out hover:-translate-y-0.5 ${card.className}`}
     >
       <div>
         <div className="mb-5 h-1 w-10 rounded-full bg-current opacity-30" />
@@ -174,7 +174,7 @@ const Benefits = () => {
           </span>
         </div>
         {/* Masonry */}
-        <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-3 md:auto-rows-auto md:grid-rows-[250px_290px_1fr]">
+        <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-3 md:auto-rows-auto md:grid-rows-[auto_290px_auto]">
           {gridCardsData.map((card, index) => (
             <GridCard key={index} card={card} />
           ))}

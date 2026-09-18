@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Leaf } from 'lucide-react';
 import HeroBackground from '@/assets/hero/background.webp';
 import { prefersReducedMotion } from '@/utils/motion';
 
@@ -17,7 +18,7 @@ const Hero = () => {
     if (prefersReducedMotion()) return;
 
     const headline = headlineRef.current;
-    const contentElements = heroContentRef.current?.querySelectorAll('.gsap-hero-reveal');
+    const contentElements = heroContentRef.current?.querySelectorAll('.gsap-hero-reveal:not(h1)');
     const bgImage = bgImageRef.current;
     const container = containerRef.current;
 
@@ -65,31 +66,43 @@ const Hero = () => {
       className="w-full"
     >
       <div 
-        className="relative w-full min-h-[640px] h-[78vh] overflow-hidden bg-drew-deep-green rounded-3xl sm:min-h-[680px] lg:h-[90vh] lg:min-h-[720px]"
+        className="relative flex h-auto min-h-0 w-full flex-col overflow-hidden bg-drew-deep-green min-[900px]:block min-[900px]:h-[90vh] min-[900px]:min-h-[720px]"
       >
         <div ref={bgImageRef}
-        className="absolute inset-y-0 right-0 z-0 w-[48%] bg-cover bg-center will-change-transform sm:w-[52%] lg:w-[68%]"
+        className="relative order-2 aspect-[16/9] h-auto w-full flex-none bg-cover bg-center bg-no-repeat will-change-transform min-[900px]:absolute min-[900px]:inset-y-0 min-[900px]:right-0 min-[900px]:order-none min-[900px]:aspect-auto min-[900px]:h-auto min-[900px]:w-[50%]"
         style={{
           backgroundImage: `url(${HeroBackground})`,
         }}
       />
 
-      <div className="absolute inset-y-0 left-0 z-10 w-[78%] bg-drew-deep-green sm:w-[72%] lg:w-[58%]" />
-      <div className="absolute inset-y-0 left-0 z-10 w-[78%] bg-gradient-to-r from-drew-deep-green via-drew-deep-green/95 to-transparent sm:w-[72%] lg:w-[58%]" />
+      <div className="hidden min-[900px]:absolute min-[900px]:inset-y-0 min-[900px]:left-0 min-[900px]:z-10 min-[900px]:block min-[900px]:w-[50%] min-[900px]:bg-drew-deep-green" />
+      <div className="hidden min-[900px]:absolute min-[900px]:inset-y-0 min-[900px]:left-0 min-[900px]:z-10 min-[900px]:block min-[900px]:w-[50%] min-[900px]:bg-gradient-to-r min-[900px]:from-drew-deep-green min-[900px]:via-drew-deep-green/95 min-[900px]:to-transparent" />
 
-      <div ref={heroContentRef} className="relative z-20 flex min-h-[640px] h-full w-[78%] items-center px-5 py-20 sm:min-h-[680px] sm:w-[72%] sm:px-10 sm:py-24 lg:w-[58%] lg:px-16 xl:px-24">
+      <div ref={heroContentRef} className="relative order-1 flex h-auto min-h-0 w-full flex-none items-center px-5 pb-10 pt-24 sm:px-10 sm:pb-10 sm:pt-32 min-[900px]:z-20 min-[900px]:order-none min-[900px]:h-full min-[900px]:min-h-[720px] min-[900px]:w-[50%] min-[900px]:px-16 min-[900px]:py-24 xl:px-24">
         <div className="w-full max-w-[720px] text-left text-drew-soft-white">
-          <h1
-            ref={headlineRef}
-            className="gsap-hero-reveal max-w-[720px] text-5xl font-black leading-[0.94] tracking-[-0.04em] text-drew-soft-white transition-[letter-spacing] duration-500 hover:tracking-[-0.01em] sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl"
-            style={{ textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)' }}
+          <div
+            className="relative inline-block w-fit max-w-full translate-x-1 rounded-[6px]"
+            style={{ transform: 'rotate(-1deg)' }}
           >
-            <span className="block">No factory.</span>
-            <span className="block">No shortcuts.</span>
-            <span className="block">Just coconut.</span>
-          </h1>
+            <div className="absolute -bottom-2 -left-2 -right-1 -top-1 rounded-[6px] bg-drew-warm-ivory" aria-hidden="true" />
+            <div className="relative z-10 rounded-[6px] bg-drew-cream px-6 py-7 shadow-[0_16px_32px_rgba(0,0,0,0.18)]">
+              <h1
+                ref={headlineRef}
+                className="gsap-hero-reveal max-w-[720px] text-4xl font-black leading-[0.94] tracking-[-0.04em] text-drew-deep-green transition-[letter-spacing] duration-500 hover:tracking-[-0.01em] sm:text-5xl md:text-6xl min-[900px]:text-6xl xl:text-7xl"
+                style={{ textShadow: 'none' }}
+              >
+                <span className="block">One ingredient.</span>
+                <span className="block">Zero compromise.</span>
+              </h1>
+            </div>
+            <div className="absolute -right-3 -top-5 z-20 flex h-16 w-16 rotate-6 items-center justify-center rounded-full border border-drew-deep-green bg-drew-cream text-drew-deep-green shadow-[0_10px_20px_rgba(0,0,0,0.16)] sm:-right-4 sm:-top-6 sm:h-20 sm:w-20" aria-label="100% real coconut">
+              <span className="absolute inset-1 flex items-start justify-center pt-1 text-[7px] font-bold uppercase tracking-[0.12em] leading-none">100% real</span>
+              <Leaf className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={1.8} aria-hidden="true" />
+              <span className="absolute inset-x-0 bottom-1 text-center text-[7px] font-bold uppercase tracking-[0.12em] leading-none">coconut</span>
+            </div>
+          </div>
           <p className="gsap-hero-reveal mt-6 max-w-xl text-lg font-medium leading-relaxed text-drew-soft-white sm:text-xl md:text-2xl" style={{ textShadow: '0 1px 6px rgba(0, 0, 0, 0.5)' }}>
-            We don't concentrate it, add to it, or heat it. What's in the bottle is what came out of the coconut.
+            No concentrate. No preservatives. No heat. Just coconut water, bottled the day it's cut.
           </p>
           <Link
             to="/product"
