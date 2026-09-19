@@ -46,7 +46,7 @@ const Navbar = () => {
     setIsOverDarkSurface(pathname === '/' || pathname === '/about');
   }, [pathname]);
 
-  const navigationColor = isOverDarkSurface ? 'text-white' : 'text-drew-deep-green';
+  const navigationColor = 'text-drew-soft-white';
   const wordmarkShadow = isOverDarkSurface ? '0 2px 8px rgba(0,0,0,0.35)' : 'none';
 
   return (
@@ -54,7 +54,7 @@ const Navbar = () => {
       className={`fixed top-0 left-0 right-0 z-50 w-full transition-transform duration-300 ease-out ${isNavbarVisible ? 'translate-y-0' : '-translate-y-full'}`}
     >
       {/* Unified Navbar */}
-      <nav className={`relative w-full grid grid-cols-3 items-center transition-colors duration-300 h-[64px] md:h-[68px] lg:h-[72px] px-4 md:px-6 lg:px-10 bg-transparent`}>
+      <nav className={`relative w-full grid grid-cols-3 items-center transition-colors duration-300 h-[64px] md:h-[68px] lg:h-[72px] px-4 md:px-6 lg:px-10 bg-drew-deep-green`}>
           <div className="flex justify-start">
             <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className={`${navigationColor} z-10 relative p-2 -m-2`}>
                 {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

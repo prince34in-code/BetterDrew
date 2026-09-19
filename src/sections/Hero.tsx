@@ -91,8 +91,8 @@ const Hero = () => {
                 className="gsap-hero-reveal max-w-[720px] text-4xl font-black leading-[0.94] tracking-[-0.04em] text-drew-deep-green transition-[letter-spacing] duration-500 hover:tracking-[-0.01em] sm:text-5xl md:text-6xl min-[900px]:text-6xl xl:text-7xl"
                 style={{ textShadow: 'none' }}
               >
-                <span className="block">One ingredient.</span>
-                <span className="block">Zero compromise.</span>
+                <span className="block">HYDRATION</span>
+                <span className="block">FROM NATURE.</span>
               </h1>
             </div>
             <div className="absolute -right-3 -top-5 z-20 flex h-16 w-16 rotate-6 items-center justify-center rounded-full border border-drew-deep-green bg-drew-cream text-drew-deep-green shadow-[0_10px_20px_rgba(0,0,0,0.16)] sm:-right-4 sm:-top-6 sm:h-20 sm:w-20" aria-label="100% real coconut">
@@ -102,7 +102,7 @@ const Hero = () => {
             </div>
           </div>
           <p className="gsap-hero-reveal mt-6 max-w-xl text-lg font-medium leading-relaxed text-drew-soft-white sm:text-xl md:text-2xl" style={{ textShadow: '0 1px 6px rgba(0, 0, 0, 0.5)' }}>
-            No concentrate. No preservatives. No heat. Just coconut water, bottled the day it's cut.
+            Pure coconut water. Nothing unnecessary.
           </p>
           <Link
             to="/product"

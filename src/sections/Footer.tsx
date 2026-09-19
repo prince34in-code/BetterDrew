@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import xIcon from '@/assets/common/x.svg';
@@ -20,7 +20,6 @@ const footerLinks = {
   Product: [
     { name: 'Young Coconut Water', href: '#shop' },
     { name: 'Product Details', href: '#shop' },
-    { name: 'Compare', href: '#comparison' }, // Assuming this should link to the comparison section
   ],
   Help: [
     { name: 'FAQ', href: '#faq' },
@@ -28,6 +27,18 @@ const footerLinks = {
     { name: 'Returns & Refunds', href: '#' }, // Placeholder
   ],
 };
+const mobilePriorityLinks = [
+  { name: 'Young Coconut Water', href: '#shop' },
+  { name: 'FAQ', href: '#faq' },
+  { name: 'Contact', href: '#contact' },
+  { name: 'Shipping & Delivery', href: '#' },
+];
+const mobileMoreLinks = [
+  { name: 'About Us', href: '#story' },
+  { name: 'Our Story', href: '#story' },
+  { name: 'Product Details', href: '#shop' },
+  { name: 'Returns & Refunds', href: '#' },
+];
 const policyLinks = [
   { name: 'Privacy Policy', href: 'https://betterdrew.com/privacy-policy' },
   { name: 'Terms of Service', href: 'https://betterdrew.com/terms-of-service' },
@@ -42,6 +53,7 @@ const socialData = [
 const Footer = () => {
   const containerRef = useRef<HTMLElement>(null);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isMoreOpen, setIsMoreOpen] = useState(false);
 
   const handleNewsletterSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -56,7 +68,7 @@ const Footer = () => {
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        ".gsap-footer-item",
+        ".gsap-footer-reveal",
         { y: 20, opacity: 0 },
         {
           stagger: 0.1,
@@ -80,17 +92,17 @@ const Footer = () => {
       id="contact"
       className="relative w-full bg-drew-warm-ivory px-4 py-8 text-drew-soft-white"
     >
-      <div className="mx-auto max-w-[1400px] rounded-3xl border border-white/5 bg-drew-deep-green p-8 md:p-12 lg:p-16">
+      <div className="mx-auto w-full max-w-[1200px] rounded-3xl border border-white/5 bg-drew-deep-green p-8 md:p-12 lg:p-16">
         {/* Newsletter and social */}
-        <div className="gsap-footer-item max-w-2xl">
-          <div className="gsap-footer-item">
+        <div className="gsap-footer-reveal max-w-2xl">
+          <div>
             <span className="text-sm font-semibold uppercase tracking-widest text-drew-lime-accent">Stay In The Know</span>
             <h3 className="mt-2 text-3xl md:text-4xl font-bold tracking-tight text-white">Better hydration, delivered.</h3>
             <p className="mt-3 text-white/70 max-w-md">Product updates, new launches, and the occasional hydration tip — nothing else.</p>
           </div>
           <form onSubmit={handleNewsletterSubmit} className="mt-6 flex max-w-md items-center border-b border-white/20 pb-2">
             <input type="email" name="email" required placeholder="Enter your email address" className="w-full bg-transparent px-0 py-2 text-white placeholder-white/50 focus:outline-none" />
-            <button type="submit" aria-label="Subscribe" className="flex-shrink-0 text-drew-lime-accent transition-colors hover:text-white">
+            <button type="submit" aria-label="Subscribe" className="flex-shrink-0 rounded-full p-2 text-drew-lime-accent transition-all duration-300 hover:scale-110 hover:bg-drew-lime-accent hover:text-drew-deep-green hover:shadow-lg">
               <ArrowRight size={20} />
             </button>
           </form>
@@ -103,7 +115,7 @@ const Footer = () => {
                 aria-label={social.name}
                 target={social.name === 'Instagram' ? '_blank' : undefined}
                 rel={social.name === 'Instagram' ? 'noopener noreferrer' : undefined}
-                className="opacity-80 transition-opacity duration-200 hover:opacity-100"
+                className="opacity-80 transition-all duration-300 hover:scale-110 hover:opacity-100 hover:brightness-125"
               >
                 {social.name === 'Instagram' ? (
                   <svg aria-hidden="true" className="h-5 w-5 fill-none stroke-drew-soft-white" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -124,17 +136,51 @@ const Footer = () => {
         </div>
 
         {/* Divider */}
-        <hr className="gsap-footer-item my-10 border-white/10" />
+        <hr className="my-10 border-white/10" />
 
         {/* Middle Section: Navigation */}
-        <div className="gsap-footer-item grid grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-8">
+        <div className="gsap-footer-reveal md:hidden">
+          <ul className="space-y-3 text-sm">
+            {mobilePriorityLinks.map(link => (
+              <li key={link.name}>
+                <Link to={link.href} className="relative text-white/65 transition-colors duration-300 hover:text-drew-lime-accent after:absolute after:bottom-[-3px] after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-drew-lime-accent after:transition-transform after:duration-300 hover:after:scale-x-100">
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-5 border-t border-white/10 pt-3">
+            <button
+              type="button"
+              aria-expanded={isMoreOpen}
+              onClick={() => setIsMoreOpen(open => !open)}
+              className="flex min-h-11 w-full items-center justify-between text-left text-sm font-semibold text-white/80 transition-colors hover:text-drew-lime-accent"
+            >
+              More
+              <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isMoreOpen ? 'rotate-180' : ''}`} />
+            </button>
+            {isMoreOpen && (
+              <ul className="space-y-3 pb-1 pt-2 text-sm">
+                {mobileMoreLinks.map(link => (
+                  <li key={link.name}>
+                    <Link to={link.href} className="relative text-white/65 transition-colors duration-300 hover:text-drew-lime-accent after:absolute after:bottom-[-3px] after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-drew-lime-accent after:transition-transform after:duration-300 hover:after:scale-x-100">
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+
+        <div className="gsap-footer-reveal hidden md:grid md:grid-cols-3 md:gap-8">
           {Object.entries(footerLinks).map(([title, links]) => (
             <div key={title}>
               <h4 className="mb-4 font-semibold text-white">{title}</h4>
               <ul className="space-y-3 text-sm">
                 {links.map(link => (
                   <li key={link.name}>
-                    <Link to={link.href} className="text-white/65 transition-colors duration-200 hover:text-drew-lime-accent">
+                    <Link to={link.href} className="relative text-white/65 transition-colors duration-300 hover:text-drew-lime-accent after:absolute after:bottom-[-3px] after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-drew-lime-accent after:transition-transform after:duration-300 hover:after:scale-x-100">
                       {link.name}
                     </Link>
                   </li>
@@ -145,8 +191,8 @@ const Footer = () => {
         </div>
 
         {/* Brand and legal */}
-        <div className="gsap-footer-item mt-16 border-t border-white/10 pt-10">
-          <h3 className="text-5xl font-black tracking-[-0.04em] text-white sm:text-7xl lg:text-8xl">{siteData.brandName.toUpperCase()}</h3>
+        <div className="gsap-footer-reveal mt-16 border-t border-white/10 pt-10">
+          <h3 className="text-3xl font-black tracking-[-0.04em] text-white sm:text-7xl lg:text-8xl">{siteData.brandName.toUpperCase()}</h3>
           <div className="mt-8 flex flex-col gap-3 text-sm text-white/50">
             <p>&copy; 2026 Betterdrew. Made in India.</p>
             <div className="flex flex-wrap gap-x-6 gap-y-2">

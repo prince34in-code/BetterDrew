@@ -18,7 +18,7 @@ const LifestyleCard = ({ category, title, description, imageUrl, index }: Lifest
   return (
     <div className={`lifestyle-card group relative flex flex-col md:flex-row w-full overflow-hidden rounded-3xl bg-drew-soft-white/80 shadow-lg`}>
       {/* Image Section */}
-      <div className={`relative w-full md:w-1/2 h-56 sm:h-64 md:h-80 overflow-hidden ${isReversed ? 'md:order-2' : ''}`}>
+      <div className={`relative w-full h-48 sm:h-56 md:h-80 overflow-hidden rounded-xl md:w-1/2 md:rounded-none ${isReversed ? 'md:order-2' : ''}`}>
         {/* This inner div is the one that will be scaled and moved */}
         <img
           src={imageUrl}
@@ -32,7 +32,7 @@ const LifestyleCard = ({ category, title, description, imageUrl, index }: Lifest
       </div>
 
       {/* Content Section */}
-      <div className={`flex w-full flex-col justify-center p-6 sm:p-8 md:w-1/2 lg:p-12 ${isReversed ? 'md:order-1' : ''}`}>
+      <div className={`flex w-full flex-col justify-center p-4 sm:p-8 md:w-1/2 md:p-8 lg:p-12 ${isReversed ? 'md:order-1' : ''}`}>
         <span className="text-xs font-semibold uppercase tracking-[0.2em] text-drew-secondary-text">
           {category}
         </span>
@@ -44,7 +44,7 @@ const LifestyleCard = ({ category, title, description, imageUrl, index }: Lifest
         </p>
         <a
           href="/about"
-          className="group/cta mt-4 sm:mt-6 flex items-center font-semibold text-drew-deep-green transition-colors duration-300 hover:text-drew-coconut-green"
+          className="group/cta mt-3 inline-flex min-h-11 items-center font-semibold text-drew-deep-green transition-colors duration-300 hover:text-drew-coconut-green sm:mt-6"
         >
           Learn More
           <div className="relative ml-2 flex h-4 w-4 items-center justify-center">
@@ -119,7 +119,7 @@ const Lifestyle = () => {
             Not just for workouts. For whatever your day actually looks like.
           </p>
         </div>
-        <div className="space-y-5 sm:space-y-6 lg:space-y-8">
+        <div className="space-y-8 sm:space-y-6 lg:space-y-8">
           {lifestyleData.map((item, index) => (
             <LifestyleCard key={item.title} {...item} index={index} />
           ))}

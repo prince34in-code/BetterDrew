@@ -19,7 +19,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, isComingSoon = false }) =>
   const cardRef = useRef<HTMLDivElement>(null);
   const showcaseDescription = isComingSoon
     ? 'Same coconut base. A fruit note, not a flavor mask.'
-    : 'The one we started with. Still the only one we would put our name on first.';
+    : '100% natural young coconut water.';
 
   const handleShopNow = () => {
     // Only navigate if the product is available
@@ -164,7 +164,7 @@ const ProductShowcase = () => {
   const comingSoonProduct: Product = {
     id: 'coming-soon',
     brand: 'Betterdrew',
-    name: 'Strawberry & Lime',
+    name: 'coconut & Lime',
     description: 'Same coconut base. A fruit note, not a flavor mask.',
     status: 'coming-soon',
     image: betterdrewProduct.image, // Re-using image as a placeholder

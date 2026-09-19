@@ -7,7 +7,8 @@ module.exports = {
     extend: {
       colors: {
         // Centralized BetterDrew coconut-water palette
-        'drew-deep-green': '#123B2A',
+        'drew-deep-green': '#101B33',
+        'drew-dark-surface': '#172A4D',
         'drew-coconut-green': '#315640',
         'drew-lime-accent': '#B5D900',
         'drew-warm-ivory': '#E6F2C8',
@@ -16,7 +17,7 @@ module.exports = {
         'drew-lifestyle-bg': '#D9EDB2',
         'drew-soft-white': '#F7FBEF',
         'drew-natural-sand': '#D9EDB2',
-        'drew-dark-text': '#123B2A',
+        'drew-dark-text': '#101B33',
         'drew-secondary-text': '#315640',
         'drew-soft-border': '#C9DEA2',
         'drew-cream': '#F7F8ED',
@@ -25,7 +26,7 @@ module.exports = {
         'drew-lavender': '#EDE8F5', // Corrected value
 
         // Existing semantic aliases used throughout the site
-        'forest-green': '#123B2A',
+        'forest-green': '#101B33',
         'muted-gold': '#B5D900',
         'warm-white': '#F7FBEF',
         'soft-sand': '#EAF5D2',

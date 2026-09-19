@@ -12,7 +12,6 @@ import Hero from '@/sections/Hero';
 import BrandTicker from '@/sections/BrandTicker';
 import Benefits from '@/sections/Benefits';
 import ProductShowcase from '@/sections/ProductShowcase';
-import Comparison from '@/sections/Comparison'; // 4.
 import FAQ from '@/sections/FAQ'; // 5.
 import Lifestyle from '@/sections/Lifestyle'; // 6.
 import Footer from '@/sections/Footer'; // 7.
@@ -38,7 +37,6 @@ const HomePage = () => (
     <BrandTicker />
     <Benefits />
     <ProductShowcase />
-    <Comparison />
     <FAQ />
     <Lifestyle />
     <WhereToBuy />
