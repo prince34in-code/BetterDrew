@@ -59,6 +59,10 @@ const FinalCTA = () => {
             <img 
                 src="https://i.imgur.com/6bQpJyv.png" // Placeholder bottle image
                 alt="BetterDrew Bottle"
+                loading="lazy"
+                decoding="async"
+                width="256"
+                height="256"
                 className="max-h-64 mx-auto mb-8"
             />
             <h2 className="text-5xl md:text-7xl font-bold">Ready for a Change?</h2>

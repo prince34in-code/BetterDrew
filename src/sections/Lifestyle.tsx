@@ -25,6 +25,7 @@ const LifestyleCard = ({ category, title, description, imageUrl, index }: Lifest
           alt={title}
           className="gsap-image-reveal h-full w-full object-cover"
           loading="lazy"
+          decoding="async"
           width="640"
           height="360"
         />
@@ -90,7 +91,6 @@ const Lifestyle = () => {
         tl.from(image, {
           scale: 1.08,
           xPercent: xPercent,
-          clipPath: 'inset(0% 50% 0% 50%)',
           ease: 'power2.out',
         })
         .from(textContent, {
@@ -112,7 +112,7 @@ const Lifestyle = () => {
           <div className="lifestyle-header-reveal inline-block bg-drew-lime-accent/30 text-drew-deep-green text-xs font-semibold px-4 py-1.5 rounded-full uppercase tracking-widest">
             Lifestyle
           </div>
-          <h2 className="lifestyle-header-reveal mt-5 text-4xl max-w-xs mx-auto sm:max-w-none sm:mx-0 sm:text-5xl lg:text-[52px] font-bold tracking-tight leading-tight text-drew-deep-green">
+          <h2 className="lifestyle-header-reveal mx-auto mt-5 w-full max-w-full whitespace-nowrap text-[17px] font-black tracking-tight leading-tight text-drew-deep-green min-[450px]:text-3xl sm:mx-0 sm:max-w-none sm:text-5xl lg:text-[52px]">
             Hydration for every moment.
           </h2>
           <p className="lifestyle-header-reveal hidden sm:block mt-4 max-w-2xl mx-auto text-lg leading-relaxed text-drew-secondary-text sm:text-xl">

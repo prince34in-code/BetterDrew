@@ -16,15 +16,6 @@ const AboutPage: React.FC = () => {
 
     const ctx = gsap.context(() => {
       // Hero Animation
-      gsap.from('.gsap-about-hero-item', {
-        opacity: 0,
-        y: 20,
-        stagger: 0.15,
-        duration: 0.8,
-        ease: 'power2.out',
-        delay: 0.2,
-      });
-
       // Principles Animation
       gsap.from('.gsap-manifesto-item', {
         opacity: 0,
@@ -55,12 +46,12 @@ const AboutPage: React.FC = () => {
         <meta property="og:url" content="https://betterdrew.com/about" />
       </Helmet>
       {/* 2. About Hero */}
-      <section className="relative w-full h-[40vh] sm:h-[45vh] lg:h-[50vh] bg-drew-deep-green flex flex-col justify-center items-center text-center px-4">
+      <section className="relative z-10 w-full h-[40vh] sm:h-[45vh] lg:h-[50vh] overflow-hidden bg-drew-deep-green flex flex-col justify-center items-center text-center px-4">
         <div className="max-w-4xl">
-          <h1 className="gsap-about-hero-item text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
+          <h1 className="text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
             About Us
           </h1>
-          <p className="gsap-about-hero-item mt-4 text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
+          <p className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
             Better Hydration.
             <br />
             Nothing Unnecessary.

@@ -81,7 +81,7 @@ const ProductDetail: React.FC = () => {
 
   return (
     <div className="bg-drew-warm-ivory py-8 px-4">
-      <section className="w-full max-w-[1400px] mx-auto pt-24 sm:pt-32 pb-16 sm:pb-24">
+      <section className="w-full max-w-[1400px] mx-auto pt-8 sm:pt-12 pb-16 sm:pb-24">
       {/* Breadcrumb */}
       <div className="mb-6 text-sm text-drew-secondary-text">
         <RouterLink to="/" className="hover:text-drew-deep-green">Home</RouterLink>
@@ -98,6 +98,11 @@ const ProductDetail: React.FC = () => {
             <img
               src={betterdrewProduct.image}
               alt={betterdrewProduct.name}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+              width="640"
+              height="800"
               className="max-h-full w-auto object-contain drop-shadow-2xl"
             />
           </div>

@@ -52,7 +52,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, isComingSoon = false }) =>
         },
       });
 
-      tl.fromTo(image, { autoAlpha: 0, y: 20, scale: 0.95 }, { autoAlpha: 1, y: 0, scale: 1, duration: 1, ease: 'power3.out' })
+      tl.fromTo(image, { y: 20, scale: 0.95 }, { y: 0, scale: 1, duration: 1, ease: 'power3.out' })
         .fromTo(eyebrow, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.8')
         .fromTo(name, { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.6')
         .fromTo(price, { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.5')
@@ -91,6 +91,10 @@ const ProductCard: FC<ProductCardProps> = ({ product, isComingSoon = false }) =>
         <img
           src={product.image}
           alt={product.name}
+          loading="lazy"
+          decoding="async"
+          width="640"
+          height="800"
           className={`gsap-product-image relative z-10 h-[92%] w-[72%] object-contain object-bottom drop-shadow-[0_20px_20px_rgba(18,59,42,0.18)] ${isComingSoon ? 'opacity-45 grayscale blur-[1px]' : ''}`}
         />
         <div className="absolute bottom-5 h-4 w-[35%] rounded-full bg-drew-deep-green/20 blur-xl transition-transform duration-500 group-hover:scale-110" />
@@ -171,11 +175,11 @@ const ProductShowcase = () => {
   };
 
   return (
-    <section ref={sectionRef} id="shop" className="w-full bg-drew-warm-ivory px-4 py-16 sm:py-20">
+    <section ref={sectionRef} id="shop" className="w-full bg-drew-warm-ivory px-4 py-12 sm:py-20">
       <div className="mx-auto max-w-[1400px]">
-        <div className="mb-10 text-center sm:mb-14">
+        <div className="mb-8 text-center sm:mb-14">
           <span className="text-xs font-bold uppercase tracking-[0.24em] text-drew-coconut-green">Featured Product</span>
-          <h2 className="mt-3 text-5xl font-black uppercase leading-none tracking-tight text-drew-deep-green sm:text-6xl lg:text-7xl">
+          <h2 className="mt-3 whitespace-nowrap text-4xl font-black uppercase leading-none tracking-tight text-drew-deep-green sm:text-6xl lg:text-7xl">
             Our Products
           </h2>
         </div>

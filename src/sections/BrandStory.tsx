@@ -29,7 +29,6 @@ const BrandStory = () => {
 
       if (imageEl) {
         tl.from(imageEl, {
-          autoAlpha: 0,
           y: 30,
           scale: 0.95,
           duration: 1,
@@ -73,7 +72,7 @@ const BrandStory = () => {
           </div>
           {/* Image Content - Right */}
           <div className="gsap-story-image group relative h-[300px] sm:h-[400px] md:h-full w-full order-1 md:order-2">
-            <img src={betterdrewProduct.image} alt="Betterdrew Product Bottle" className="h-full w-full object-contain transition-transform duration-300 ease-in-out group-hover:scale-[1.03]" />
+            <img src={betterdrewProduct.image} alt="Betterdrew Product Bottle" width="640" height="800" decoding="async" className="h-full w-full object-contain transition-transform duration-300 ease-in-out group-hover:scale-[1.03]" />
           </div>
         </div>
       </div>

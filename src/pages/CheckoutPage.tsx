@@ -272,7 +272,7 @@ const CheckoutPage: React.FC = () => {
                   {cartItems.map(item => (
                     <div key={item.id} className="flex items-center gap-4">
                       <div className="relative flex-shrink-0">
-                        <img src={item.image} alt={item.name} className="w-16 h-16 object-contain rounded-lg bg-drew-product-bg p-1" />
+                        <img src={item.image} alt={item.name} width="64" height="64" decoding="async" className="w-16 h-16 object-contain rounded-lg bg-drew-product-bg p-1" />
                         <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-drew-lime-accent text-xs font-bold text-drew-deep-green">{item.quantity}</span>
                       </div>
                       <div className="flex-grow">

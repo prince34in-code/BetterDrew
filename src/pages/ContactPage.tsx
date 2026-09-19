@@ -84,17 +84,14 @@ const ContactPage: React.FC = () => {
         <meta property="og:url" content="https://betterdrew.com/contact" />
       </Helmet>
       {/* 1. Contact Hero */}
-      <section className="relative w-full h-[240px] sm:h-[280px] lg:h-[320px] bg-gradient-to-br from-drew-deep-green to-green-900 flex items-center justify-center">
-        <h1 className="text-white text-6xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tighter">
+      <section className="relative w-full h-[240px] sm:h-[280px] lg:h-[320px] bg-drew-deep-green flex items-center justify-center">
+        <h1 className="text-drew-cream text-6xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tighter">
           Contact
         </h1>
       </section>
 
       {/* 3. Contact Form */}
-      <section className="w-full max-w-4xl mx-auto py-12 sm:py-20 px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-drew-deep-green tracking-tight">CONTACT US</h2>
-        </div>
+      <section className="w-full max-w-4xl mx-auto py-6 sm:py-10 px-4 sm:px-6 lg:px-8">
         <div className="bg-drew-soft-white p-6 sm:p-8 lg:p-10 rounded-3xl shadow-soft">
           <div className="text-center mb-10 hidden">
             <p className="mt-3 text-drew-secondary-text max-w-lg mx-auto">Fill out the form below and we'll get back to you as soon as possible.</p>
@@ -109,23 +106,23 @@ const ContactPage: React.FC = () => {
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-drew-secondary-text mb-1.5">Your Name</label>
-                  <input type="text" id="name" name="name" value={formData.name} onChange={handleInputChange} required className={`w-full px-4 py-3 bg-drew-warm-ivory/80 border-2 rounded-lg focus:ring-drew-lime-accent focus:border-drew-lime-accent transition ${errors.name ? 'border-red-400' : 'border-drew-soft-border'}`} />
+                  <input type="text" id="name" name="name" value={formData.name} onChange={handleInputChange} required className={`w-full appearance-none bg-white px-4 py-3 border-2 rounded-lg focus:ring-drew-lime-accent focus:border-drew-lime-accent transition ${errors.name ? 'border-red-400' : 'border-drew-soft-border'}`} />
                   {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-drew-secondary-text mb-1.5">Your Email</label>
-                  <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} required className={`w-full px-4 py-3 bg-drew-warm-ivory/80 border-2 rounded-lg focus:ring-drew-lime-accent focus:border-drew-lime-accent transition ${errors.email ? 'border-red-400' : 'border-drew-soft-border'}`} />
+                  <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} required className={`w-full appearance-none bg-white px-4 py-3 border-2 rounded-lg focus:ring-drew-lime-accent focus:border-drew-lime-accent transition ${errors.email ? 'border-red-400' : 'border-drew-soft-border'}`} />
                   {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                 </div>
               </div>
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-drew-secondary-text mb-1.5">Subject</label>
-                <input type="text" id="subject" name="subject" value={formData.subject} onChange={handleInputChange} required className={`w-full px-4 py-3 bg-drew-warm-ivory/80 border-2 rounded-lg focus:ring-drew-lime-accent focus:border-drew-lime-accent transition ${errors.subject ? 'border-red-400' : 'border-drew-soft-border'}`} />
+                <input type="text" id="subject" name="subject" value={formData.subject} onChange={handleInputChange} required className={`w-full appearance-none bg-white px-4 py-3 border-2 rounded-lg focus:ring-drew-lime-accent focus:border-drew-lime-accent transition ${errors.subject ? 'border-red-400' : 'border-drew-soft-border'}`} />
                 {errors.subject && <p className="text-red-500 text-xs mt-1">{errors.subject}</p>}
               </div>
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-drew-secondary-text mb-1.5">Your Message</label>
-                <textarea id="message" name="message" rows={4} value={formData.message} onChange={handleInputChange} required className={`w-full px-4 py-3 bg-drew-warm-ivory/80 border-2 rounded-lg focus:ring-drew-lime-accent focus:border-drew-lime-accent transition ${errors.message ? 'border-red-400' : 'border-drew-soft-border'}`}></textarea>
+                <textarea id="message" name="message" rows={4} value={formData.message} onChange={handleInputChange} required className={`w-full appearance-none bg-white px-4 py-3 border-2 rounded-lg focus:ring-drew-lime-accent focus:border-drew-lime-accent transition ${errors.message ? 'border-red-400' : 'border-drew-soft-border'}`}></textarea>
                 {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
               </div>
               <div className="text-center pt-2">

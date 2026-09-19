@@ -6,7 +6,7 @@ import { betterdrewProduct } from '@/data/product';
 
 const ProductPage: React.FC = () => {
   return (
-    <div className="pt-24">
+    <div>
       <Helmet>
         <title>{`${betterdrewProduct.name} | Betterdrew`}</title>
         <meta name="description" content={`Shop ${betterdrewProduct.name}. ${betterdrewProduct.description}`} />

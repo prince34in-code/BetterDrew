@@ -13,35 +13,35 @@ gsap.registerPlugin(ScrollTrigger);
 
 const footerLinks = {
   Company: [
-    { name: 'About Us', href: '#story' },
-    { name: 'Our Story', href: '#story' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'About Us', href: '/about' },
+    { name: 'Our Story', href: '/our-story' },
+    { name: 'Contact', href: '/contact' },
   ],
   Product: [
-    { name: 'Young Coconut Water', href: '#shop' },
-    { name: 'Product Details', href: '#shop' },
+    { name: 'Young Coconut Water', href: '/product' },
+    { name: 'Product Details', href: '/product-details' },
   ],
   Help: [
-    { name: 'FAQ', href: '#faq' },
-    { name: 'Shipping & Delivery', href: '#' }, // Placeholder
-    { name: 'Returns & Refunds', href: '#' }, // Placeholder
+    { name: 'FAQ', href: '/faq' },
+    { name: 'Shipping & Delivery', href: '/shipping-delivery' },
+    { name: 'Returns & Refunds', href: '/returns-refunds' },
   ],
 };
 const mobilePriorityLinks = [
-  { name: 'Young Coconut Water', href: '#shop' },
-  { name: 'FAQ', href: '#faq' },
-  { name: 'Contact', href: '#contact' },
-  { name: 'Shipping & Delivery', href: '#' },
+  { name: 'Young Coconut Water', href: '/product' },
+  { name: 'FAQ', href: '/faq' },
+  { name: 'Contact', href: '/contact' },
+  { name: 'Shipping & Delivery', href: '/shipping-delivery' },
 ];
 const mobileMoreLinks = [
-  { name: 'About Us', href: '#story' },
-  { name: 'Our Story', href: '#story' },
-  { name: 'Product Details', href: '#shop' },
-  { name: 'Returns & Refunds', href: '#' },
+  { name: 'About Us', href: '/about' },
+  { name: 'Our Story', href: '/our-story' },
+  { name: 'Product Details', href: '/product-details' },
+  { name: 'Returns & Refunds', href: '/returns-refunds' },
 ];
 const policyLinks = [
-  { name: 'Privacy Policy', href: 'https://betterdrew.com/privacy-policy' },
-  { name: 'Terms of Service', href: 'https://betterdrew.com/terms-of-service' },
+  { name: 'Privacy Policy', href: '/privacy-policy' },
+  { name: 'Terms of Service', href: '/terms-of-service' },
 ];
 
 const socialData = [
@@ -124,8 +124,8 @@ const Footer = () => {
         <div className="gsap-footer-reveal max-w-2xl">
           <div>
             <span className="text-sm font-semibold uppercase tracking-widest text-drew-lime-accent">Stay In The Know</span>
-            <h3 className="mt-2 text-3xl md:text-4xl font-bold tracking-tight text-white">Better hydration, delivered.</h3>
-            <p className="mt-3 text-white/70 max-w-md">Product updates, new launches, and the occasional hydration tip — nothing else.</p>
+            <h3 className="mt-2 text-3xl md:text-4xl font-bold tracking-tight text-white">Get Updates.</h3>
+            <p className="mt-3 text-white/70 max-w-md">For news,Events,& promos.</p>
           </div>
           <form onSubmit={handleNewsletterSubmit} className="mt-6 flex max-w-md items-center border-b border-white/20 pb-2">
             <input type="email" name="email" required placeholder="Enter your email address" className="w-full bg-transparent px-0 py-2 text-white placeholder-white/50 focus:outline-none" />
@@ -156,7 +156,7 @@ const Footer = () => {
                     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                   </svg>
                 ) : (
-                  <img src={social.icon} alt={`${social.name} logo`} className="h-5 w-5 brightness-0 invert" />
+                  <img src={social.icon} alt={`${social.name} logo`} width="20" height="20" decoding="async" className="h-5 w-5 brightness-0 invert" />
                 )}
               </a>
             ))}

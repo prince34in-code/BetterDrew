@@ -46,7 +46,7 @@ const CartPage: React.FC = () => {
               <div className="bg-drew-soft-white rounded-2xl shadow-soft p-4 sm:p-6 space-y-4">
                 {cartItems.map(item => (
                   <div key={item.id} className="flex items-center gap-4 border-b border-drew-soft-border pb-4 last:border-b-0 last:pb-0">
-                    <img src={item.image} alt={item.name} className="w-20 h-20 sm:w-24 sm:h-24 object-contain rounded-lg bg-drew-product-bg p-1" />
+                    <img src={item.image} alt={item.name} width="96" height="96" decoding="async" className="w-20 h-20 sm:w-24 sm:h-24 object-contain rounded-lg bg-drew-product-bg p-1" />
                     <div className="flex-grow">
                       <h3 className="font-bold text-drew-deep-green">{item.name} - <span className="font-semibold">{item.packName || ''}</span></h3>
                       <p className="text-sm text-drew-secondary-text">{item.bottlesPerPack || 0} bottles per pack</p>

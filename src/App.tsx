@@ -21,6 +21,13 @@ import AboutPage from '@/pages/AboutPage';
 import CheckoutPage from '@/pages/CheckoutPage';
 import ContactPage from '@/pages/ContactPage';
 import CartPage from '@/pages/CartPage';
+import StoryPage from '@/pages/StoryPage';
+import ProductDetailsPage from '@/pages/ProductDetailsPage';
+import FAQPage from '@/pages/FAQPage';
+import ShippingPage from '@/pages/ShippingPage';
+import ReturnsPage from '@/pages/ReturnsPage';
+import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
+import TermsPage from '@/pages/TermsPage';
 
 const HomePage = () => (
   <>
@@ -108,7 +115,14 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/product" element={<ProductPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/our-story" element={<StoryPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/product-details" element={<ProductDetailsPage />} />
+            <Route path="/faq" element={<FAQPage />} />
+            <Route path="/shipping-delivery" element={<ShippingPage />} />
+            <Route path="/returns-refunds" element={<ReturnsPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="/terms-of-service" element={<TermsPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="*" element={<NotFoundPage />} />

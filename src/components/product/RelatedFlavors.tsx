@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface FlavorCardProps {
   name: string;
@@ -7,18 +8,22 @@ interface FlavorCardProps {
 }
 
 const FlavorCard: React.FC<FlavorCardProps> = ({ name, imageSrc, bgColor }) => (
-  <a href="#" className="block group">
+  <Link to="/product" className="block group">
     <div className={`rounded-container-radius p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 ${bgColor}`}>
       <div className="relative h-64 mb-6">
         <img 
           src={imageSrc} 
           alt={name}
+          loading="lazy"
+          decoding="async"
+          width="400"
+          height="600"
           className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110"
         />
       </div>
       <h3 className="text-2xl font-bold text-forest-green text-center">{name}</h3>
     </div>
-  </a>
+  </Link>
 );
 
 const RelatedFlavors: React.FC = () => {

@@ -15,6 +15,19 @@ const Hero = () => {
   const bgImageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const preload = document.createElement('link');
+    preload.rel = 'preload';
+    preload.as = 'image';
+    preload.type = 'image/webp';
+    preload.href = HeroBackground;
+    document.head.appendChild(preload);
+
+    return () => {
+      preload.remove();
+    };
+  }, []);
+
+  useEffect(() => {
     if (prefersReducedMotion()) return;
 
     const headline = headlineRef.current;
@@ -60,6 +73,7 @@ const Hero = () => {
   }, []);
 
   return (
+    <>
     <section 
       ref={containerRef}
       id="home"
@@ -116,6 +130,7 @@ const Hero = () => {
       
       {/* Scroll Indicator */}
     </section>
+    </>
   );
 };
 
