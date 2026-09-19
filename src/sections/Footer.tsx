@@ -53,11 +53,38 @@ const socialData = [
 const Footer = () => {
   const containerRef = useRef<HTMLElement>(null);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isNewsletterSubmitting, setIsNewsletterSubmitting] = useState(false);
+  const [newsletterError, setNewsletterError] = useState<string | null>(null);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
 
-  const handleNewsletterSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleNewsletterSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsSubscribed(true);
+    const form = event.currentTarget;
+    const email = new FormData(form).get('email')?.toString().trim() ?? '';
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setNewsletterError('Enter a valid email address.');
+      return;
+    }
+
+    setIsNewsletterSubmitting(true);
+    setNewsletterError(null);
+
+    try {
+      const response = await fetch(import.meta.env.VITE_NEWSLETTER_ENDPOINT || '/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) throw new Error('Newsletter signup failed');
+      setIsSubscribed(true);
+      form.reset();
+    } catch {
+      setNewsletterError('We could not add you right now. Please try again.');
+    } finally {
+      setIsNewsletterSubmitting(false);
+    }
   };
 
   useEffect(() => {
@@ -102,11 +129,12 @@ const Footer = () => {
           </div>
           <form onSubmit={handleNewsletterSubmit} className="mt-6 flex max-w-md items-center border-b border-white/20 pb-2">
             <input type="email" name="email" required placeholder="Enter your email address" className="w-full bg-transparent px-0 py-2 text-white placeholder-white/50 focus:outline-none" />
-            <button type="submit" aria-label="Subscribe" className="flex-shrink-0 rounded-full p-2 text-drew-lime-accent transition-all duration-300 hover:scale-110 hover:bg-drew-lime-accent hover:text-drew-deep-green hover:shadow-lg">
+            <button type="submit" aria-label="Subscribe" disabled={isNewsletterSubmitting} className="flex-shrink-0 rounded-full p-2 text-drew-lime-accent transition-all duration-300 hover:scale-110 hover:bg-drew-lime-accent hover:text-drew-deep-green hover:shadow-lg disabled:cursor-wait disabled:opacity-50">
               <ArrowRight size={20} />
             </button>
           </form>
-          {isSubscribed && <p className="mt-2 text-sm text-drew-lime-accent" aria-live="polite">Thanks for subscribing.</p>}
+          {isSubscribed && <p className="mt-2 text-sm text-drew-lime-accent" aria-live="polite">Thanks — you're on the list.</p>}
+          {newsletterError && <p className="mt-2 text-sm text-red-200" role="alert">{newsletterError}</p>}
           <div className="mt-6 flex items-center gap-5">
             {socialData.map(social => (
               <a

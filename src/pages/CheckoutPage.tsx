@@ -1,9 +1,18 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useEffect, useRef, useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from "@/context/CartContext";
 import { Helmet } from 'react-helmet-async';
 import { CheckCircle } from 'lucide-react';
 import Footer from '@/sections/Footer';
+
+declare global {
+  interface Window {
+    Razorpay?: new (options: Record<string, unknown>) => {
+      open: () => void;
+      on: (event: string, callback: () => void) => void;
+    };
+  }
+}
 
 interface FormState {
   fullName: string;
@@ -36,6 +45,20 @@ const CheckoutPage: React.FC = () => {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isOrderComplete, setIsOrderComplete] = useState(false);
+  const [isPaymentSubmitting, setIsPaymentSubmitting] = useState(false);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
+  const hasProcessedPaymentReturn = useRef(false);
+
+  useEffect(() => {
+    const paymentStatus = new URLSearchParams(window.location.search).get('payment');
+    if (paymentStatus === 'success' && !hasProcessedPaymentReturn.current) {
+      hasProcessedPaymentReturn.current = true;
+      clearCart();
+      setIsOrderComplete(true);
+    } else if (paymentStatus === 'cancelled' || paymentStatus === 'failed') {
+      setPaymentError('Payment was not completed. You can retry when you are ready.');
+    }
+  }, [clearCart]);
 
   if (itemCount === 0) {
     return (
@@ -74,19 +97,81 @@ const CheckoutPage: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log('Order Submitted (Frontend Only):', {
-        customer: formData,
-        order: {
+    if (!validateForm()) return;
+
+    const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
+    const orderEndpoint = import.meta.env.VITE_RAZORPAY_ORDER_ENDPOINT || '/api/razorpay-order';
+    const verifyEndpoint = import.meta.env.VITE_RAZORPAY_VERIFY_ENDPOINT || '/api/razorpay-verify';
+    if (!razorpayKey) {
+      setPaymentError('Payment is not configured yet. Please try again later.');
+      return;
+    }
+
+    setIsPaymentSubmitting(true);
+    setPaymentError(null);
+
+    try {
+      const orderResponse = await fetch(orderEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: Math.round(subtotal * 100),
+          currency: 'INR',
+          receipt: `betterdrew-${Date.now()}`,
           items: cartItems,
-          subtotal: subtotal,
-          total: subtotal, // No shipping/taxes
-        },
+        }),
       });
-      clearCart();
-      setIsOrderComplete(true);
+      if (!orderResponse.ok) throw new Error('Could not create payment order');
+      const order = await orderResponse.json() as { id: string; amount: number; currency: string };
+
+      if (!window.Razorpay) {
+        await new Promise<void>((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+          script.onload = () => resolve();
+          script.onerror = () => reject(new Error('Could not load Razorpay'));
+          document.body.appendChild(script);
+        });
+      }
+
+      if (!window.Razorpay) throw new Error('Could not load Razorpay');
+      const razorpay = new window.Razorpay({
+        key: razorpayKey,
+        amount: order.amount,
+        currency: order.currency,
+        name: 'Betterdrew',
+        description: 'Betterdrew order',
+        order_id: order.id,
+        prefill: { name: formData.fullName, email: formData.email, contact: formData.phone },
+        handler: async (response: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string }) => {
+          try {
+            const verification = await fetch(verifyEndpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(response),
+            });
+            if (!verification.ok) throw new Error('Payment verification failed');
+            clearCart();
+            setIsOrderComplete(true);
+          } catch {
+            setPaymentError('Payment was received but could not be verified. Please contact support before retrying.');
+          } finally {
+            setIsPaymentSubmitting(false);
+          }
+        },
+        modal: { ondismiss: () => setIsPaymentSubmitting(false) },
+        theme: { color: '#101B33' },
+      });
+      razorpay.on('payment.failed', () => {
+        setPaymentError('Payment failed. Please check your details and try again.');
+        setIsPaymentSubmitting(false);
+      });
+      razorpay.open();
+    } catch {
+      setPaymentError('We could not start payment. Please try again.');
+      setIsPaymentSubmitting(false);
     }
   };
 
@@ -115,7 +200,7 @@ const CheckoutPage: React.FC = () => {
                 Thank You!
               </h1>
               <p className="mt-4 text-drew-secondary-text">
-                Your order has been received. This is a frontend-only confirmation. Payment integration is coming soon.
+                Your payment was verified successfully.
               </p>
               <Link to="/" className="mt-8 inline-block px-8 py-3 bg-drew-deep-green text-drew-soft-white font-bold rounded-full hover:bg-drew-lime-accent hover:text-drew-deep-green transition-all">
                 Continue Shopping
@@ -215,10 +300,11 @@ const CheckoutPage: React.FC = () => {
                 </div>
 
                 <div className="mt-6">
-                  <button type="submit" className="w-full px-8 py-4 bg-drew-deep-green text-drew-soft-white font-bold rounded-full hover:bg-drew-lime-accent hover:text-drew-deep-green transition-all disabled:opacity-50 disabled:cursor-not-allowed">
-                    Place Order
+                  {paymentError && <p className="mb-4 text-sm text-red-600" role="alert">{paymentError}</p>}
+                  <button type="submit" disabled={isPaymentSubmitting} className="w-full px-8 py-4 bg-drew-deep-green text-drew-soft-white font-bold rounded-full hover:bg-drew-lime-accent hover:text-drew-deep-green transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                    {isPaymentSubmitting ? 'Opening payment...' : 'Pay securely'}
                   </button>
-                  <p className="text-xs text-center text-drew-secondary-text mt-4">Payment is not required for this demo.</p>
+                  <p className="text-xs text-center text-drew-secondary-text mt-4">Secure payment powered by Razorpay.</p>
                 </div>
               </div>
             </div>

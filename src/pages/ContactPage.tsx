@@ -21,6 +21,8 @@ const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState<FormState>({ name: '', email: '', subject: '', message: '' });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
@@ -34,14 +36,32 @@ const ContactPage: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (validate()) {
-      // TODO: Connect to an email sending service or backend API.
-      console.log('Form Submitted:', formData);
+    if (!validate()) return;
+
+    const endpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
+    if (!endpoint) {
+      setSubmitError('Contact form is not configured yet. Please email us directly.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) throw new Error('Contact form submission failed');
       setIsSubmitted(true);
-      // Reset form after a delay or on success confirmation
-      // setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch {
+      setSubmitError('We could not send your message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -109,8 +129,9 @@ const ContactPage: React.FC = () => {
                 {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
               </div>
               <div className="text-center pt-2">
-                <button type="submit" className="group inline-flex items-center justify-center px-8 py-4 bg-drew-deep-green text-drew-soft-white font-bold text-lg rounded-full transition-all duration-300 ease-out hover:bg-drew-lime-accent hover:text-drew-deep-green">
-                  <span>SEND</span>
+                {submitError && <p className="mb-4 text-sm text-red-600" role="alert">{submitError}</p>}
+                <button type="submit" disabled={isSubmitting} className="group inline-flex items-center justify-center px-8 py-4 bg-drew-deep-green text-drew-soft-white font-bold text-lg rounded-full transition-all duration-300 ease-out hover:bg-drew-lime-accent hover:text-drew-deep-green disabled:cursor-wait disabled:opacity-60">
+                  <span>{isSubmitting ? 'SENDING...' : 'SEND'}</span>
                   <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
               </div>
