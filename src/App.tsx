@@ -6,7 +6,7 @@ import { MotionConfig } from 'framer-motion';
 import { CartProvider } from "@/context/CartContext";
 import { prefersReducedMotion } from '@/utils/motion';
 
-import ScrollToTop from '../ScrollToTop';
+import ScrollToTop from '@/components/common/ScrollToTop';
 import Navbar from '@/components/common/Navbar';
 import Hero from '@/sections/Hero';
 import BrandTicker from '@/sections/BrandTicker';

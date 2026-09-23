@@ -11,9 +11,10 @@ interface ApiResponse {
 }
 
 const PACK_PRICES_PAISE: Record<string, number> = {
-  'betterdrew-coconut-water-6-pack': 90000,
-  'betterdrew-coconut-water-12-pack': 162000,
-  'betterdrew-coconut-water-24-pack': 306000,
+  'betterdrew-coconut-water-1-pack': 3900,
+  'betterdrew-coconut-water-6-pack': 22900,
+  'betterdrew-coconut-water-12-pack': 43900,
+  'betterdrew-coconut-water-24-pack': 84900,
 };
 
 const send = (response: ApiResponse, status: number, body: unknown) => {

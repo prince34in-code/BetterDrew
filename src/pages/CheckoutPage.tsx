@@ -36,7 +36,6 @@ interface FormErrors {
 
 const CheckoutPage: React.FC = () => {
   const { cartItems, getSubtotal, getItemCount, clearCart } = useCart();
-  const navigate = useNavigate();
   const subtotal = getSubtotal();
   const itemCount = getItemCount();
 

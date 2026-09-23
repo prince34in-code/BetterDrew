@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import benefitLandscape1 from '@/assets/benefits/benefit-landscape-1.webp';
@@ -85,14 +86,14 @@ const GridCard = ({
       </div>
 
       {(card.className.includes('bg-drew-deep-green') || card.className.includes('bg-orange-100')) && (
-        <a
-          href="/product"
+        <Link
+          to="/product"
           className={`mt-4 w-fit rounded-full px-5 py-2.5 text-sm font-semibold transition-transform duration-200 hover:-translate-y-0.5 sm:mt-6 ${
             card.className.includes('bg-drew-deep-green') ? 'bg-drew-warm-ivory text-drew-deep-green' : 'bg-drew-deep-green text-drew-soft-white'
           }`}
         >
           Learn More →
-        </a>
+        </Link>
       )}
     </div>
   );

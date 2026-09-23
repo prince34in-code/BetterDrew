@@ -127,7 +127,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, isComingSoon = false }) =>
 
         <div className="mb-2 text-xs font-semibold text-drew-coconut-green">Select Size</div>
         <div className="mb-3 rounded-full bg-drew-cream px-4 py-3 text-sm font-semibold text-drew-deep-green">
-          {isComingSoon ? 'Coming soon' : '200ml · 6 Pack'}
+          {isComingSoon ? 'Coming soon' : '200ml · Single & Multi-Packs'}
         </div>
 
         <div className="gsap-product-price mb-2 flex items-center justify-between rounded-full border border-drew-deep-green px-4 py-3 text-sm font-semibold">

@@ -4,9 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { siteData } from '@/data/site';
 import { prefersReducedMotion } from '@/utils/motion';
 
-// Placeholder for the product label image. This asset needs to be created.
-const ProductLabelImage = '/src/assets/product/label.png';
-
 const Transparency = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
